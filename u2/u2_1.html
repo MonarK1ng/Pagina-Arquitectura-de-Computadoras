@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U2.1</title>
+
+  <style>
+
+    /* ------------------ FONDO GENERAL ------------------ */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(39, 24, 126, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(174, 184, 254, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(241, 242, 246, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      background-attachment: fixed;
+    }
+
+    /* ------------------ PANEL LATERAL ------------------ */
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 10px);;
+      overflow-y: auto;
+      padding: 15px;
+      padding-bottom: 40px;
+      box-shadow: 2px 0 14px rgba(0, 0, 0, 0.25);
+      scrollbar-color: #758Bfd #f1f2f6;
+
+      /* MISMO ESTILO RADIAL DEL ORIGINAL */
+      background:
+        linear-gradient(135deg, #f1f2f6 0%, #aeb8fe 100%),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.15), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.15), transparent 60%);
+    }
+
+    .controls h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #27187e;
+    }
+
+
+    /* ------------------ BOTONES DEL ÍNDICE ------------------ */
+
+    .menu-btn {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9em;
+      color: white;
+    }
+
+    /* Color NARANJA (active original) */
+    .menu-main {
+      background: linear-gradient(135deg, #ff8600 0%, #ee5a52 100%);
+    }
+
+    /* Botones de UNIDAD – AZUL OSCURO (como botones originales) */
+    .menu-unit {
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+    }
+
+    /* SUBTEMAS – color más claro */
+    .menu-sub {
+      background: #758bfd;
+      color: #000;
+    }
+
+    /* SUB-SUB TEMAS (1.2.1, 3.1.1, etc.) */
+    .menu-subdeep {
+      background: #aeb8fe; /* un tono más oscuro */
+      color: #000;
+      width: 85%;
+    }
+
+
+    /* ------------------ CONTENIDO ------------------ */
+
+    .container {
+      margin-left: 240px;
+      padding: 20px;
+      color: #444
+    }
+
+    /* ENCABEZADO estilo “cristal”, similar al original */
+    header {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95)),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.1), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.1), transparent 60%);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.3em;
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: #444;
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    #content-area {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      min-height: 500px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+
+    /* IMAGENES */
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      /* Centrada */
+      .img-center {
+        display: block;
+        margin: 20px auto;
+        max-width: 90%;
+      }
+
+      /* Izquierda */
+      .img-left {
+        float: left;
+        margin: 10px 20px 10px 0;
+        max-width: 45%;
+      }
+
+      /* Derecha */
+      .img-right {
+        float: right;
+        margin: 10px 0 10px 20px;
+        max-width: 45%;
+      }
+
+      /* Banner */
+      .img-full {
+        width: 100%;
+        margin: 20px 0;
+      }
+
+      /* Fix floats */
+      .clearfix::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+
+  </style>
+</head>
+
+<body>
+
+
+  <!-- PANEL LATERAL: ÍNDICE -->
+  <div class="controls">
+
+    <!-- MENU PRINCIPAL -->
+    <a href="../index.html">
+      <button class="menu-btn menu-main">Menú Principal</button>
+    </a>
+
+    <!-- UNIDAD 1 -->
+    <a href="../u1/u1_index.html">
+      <button class="menu-btn menu-unit">Unidad 1: Arquitectura de Cómputo</button>
+    </a>
+
+    <a href="../u1/u1_1.html">
+      <button class="menu-btn menu-sub">1.1 Modelo de arquitecturas</button>
+    </a>
+
+    <a href="../u1/u1_2.html">
+      <button class="menu-btn menu-sub">1.2 Análisis de componentes</button>
+    </a>
+
+    <a href="../u1/u1_2_1.html">
+      <button class="menu-btn menu-subdeep">1.2.1 CPU</button>
+    </a>
+    <a href="../u1/u1_2_2.html">
+      <button class="menu-btn menu-subdeep">1.2.2 Memoria</button>
+    </a>
+    <a href="../u1/u1_2_3.html">
+      <button class="menu-btn menu-subdeep">1.2.3 Sistemas E/S</button>
+    </a>
+    <a href="../u1/u1_2_4.html">
+      <button class="menu-btn menu-subdeep">1.2.4 Buses</button>
+    </a>
+
+
+    <!-- UNIDAD 2 -->
+    <a href="u2_index.html">
+      <button class="menu-btn menu-unit">Unidad 2: CPU</button>
+    </a>
+
+    <a href="u2_1.html">
+      <button class="menu-btn menu-sub">2.1 Organización del procesador</button>
+    </a>
+
+    <a href="u2_2.html">
+      <button class="menu-btn menu-sub">2.2 Estructura de Registros</button>
+    </a>
+
+    <a href="u2_3.html">
+      <button class="menu-btn menu-sub">2.3 Ciclo de Instrucción</button>
+    </a>
+
+    <a href="u2_4.html">
+      <button class="menu-btn menu-sub">2.4 Modos de direccionamiento</button>
+    </a>
+
+
+    <!-- UNIDAD 3 -->
+    <a href="../u3/u3_index.html">
+      <button class="menu-btn menu-unit">Unidad 3: Selección de Componentes</button>
+    </a>
+
+    <a href="../u3/u3_1.html">
+      <button class="menu-btn menu-sub">3.1 Chipset</button>
+    </a>
+
+    <a href="../u3/u3_1_1.html">
+      <button class="menu-btn menu-subdeep">3.1.1 CPU</button>
+    </a>
+    <a href="../u3/u3_1_2.html">
+      <button class="menu-btn menu-subdeep">3.1.2 Controlador de Bus</button>
+    </a>
+    <a href="../u3/u3_1_3.html">
+      <button class="menu-btn menu-subdeep">3.1.3 E/S</button>
+    </a>
+    <a href="../u3/u3_1_4.html">
+      <button class="menu-btn menu-subdeep">3.1.4 Interrupciones</button>
+    </a>
+    <a href="../u3/u3_1_5.html">
+      <button class="menu-btn menu-subdeep">3.1.5 Controlador DMA</button>
+    </a>
+    <a href="../u3/u3_1_6.html">
+      <button class="menu-btn menu-subdeep">3.1.6 Circuitos de temporización</button>
+    </a>
+    <a href="../u3/u3_1_7.html">
+      <button class="menu-btn menu-subdeep">3.1.7 Controladores de video</button>
+    </a>
+
+    <a href="../u3/u3_2.html">
+      <button class="menu-btn menu-sub">3.2 Almacenamiento</button>
+    </a>
+
+    <a href="../u3/u3_3.html">
+      <button class="menu-btn menu-sub">3.3 Fuentes de Alimentación</button>
+    </a>
+
+    <a href="../u3/u3_4.html">
+      <button class="menu-btn menu-sub">3.4 Ambientes de servicio</button>
+    </a>
+
+  </div>
+
+
+  <!-- CONTENIDO CENTRAL -->
+  <!-- CONTENIDO CENTRAL -->
+<div class="container">
+
+  <header>
+    <h1>2.1 Organización del Procesador</h1>
+  </header>
+
+  <div id="content-area">
+
+    <p>
+      La organización del procesador se refiere a cómo se estructuran los elementos internos del CPU y cómo
+      interactúan para ejecutar instrucciones. Cada componente cumple una función específica dentro del flujo
+      de procesamiento, contribuyendo al movimiento de datos, la coordinación de señales y la realización de
+      operaciones lógicas y aritméticas.
+    </p>
+
+    <h2>Unidad de Control (UC)</h2>
+
+    <img class="img-right" src="../img/u2_1_org.png" style="width:40%;">
+    <p>
+      La Unidad de Control dirige el comportamiento interno del CPU analizando la instrucción que proviene del
+      registro correspondiente. A partir de esa información genera señales que indican qué operación realizar,
+      cuáles registros deben activarse y qué rutas seguirán los datos.
+    </p>
+    
+
+    <p>
+      Su función es asegurar que cada paso de la instrucción ocurra en el orden correcto, coordinando tiempos,
+      habilitando módulos y manteniendo la sincronización del procesador. Sin esta unidad, las partes internas
+      no podrían actuar de manera organizada.
+    </p>
+
+    <h2>Unidad Aritmético-Lógica (ALU)</h2>
+
+
+    <p>
+      La ALU se encarga de realizar operaciones aritméticas como sumas y restas, y operaciones lógicas como
+      comparaciones y evaluaciones booleanas. Sus resultados afectan directamente las banderas del CPU, que
+      reflejan condiciones como acarreo, signo u overflow.
+    </p>
+
+    <p>
+      Este módulo trabaja a gran velocidad, recibiendo datos desde los registros y enviando los resultados a la
+      unidad correspondiente. Su eficiencia es clave para el rendimiento general del sistema, ya que interviene
+      en prácticamente todas las instrucciones.
+    </p>
+
+    <h2>Registros</h2>
+
+    <p>
+      Los registros son espacios de almacenamiento de acceso inmediato que guardan datos temporales e información
+      necesaria para ejecutar instrucciones. Debido a su rapidez, permiten que el CPU opere sin depender
+      constantemente de la memoria principal.
+    </p>
+
+    <p>
+      Entre sus funciones se incluye mantener direcciones de memoria, almacenar resultados parciales y conservar
+      la instrucción actualmente procesada. El acceso directo a estos valores reduce tiempos de espera dentro
+      del ciclo de instrucción.
+    </p>
+
+    <h2>Buses Internos</h2>
+
+    <p>
+      Los buses internos son las líneas de comunicación que permiten el traslado de señales, datos y direcciones
+      dentro del procesador. Su diseño define cuánta información puede transportarse simultáneamente.
+    </p>
+
+    <p>
+      Están divididos en buses de datos, de direcciones y de control, cada uno con una función específica que
+      asegura el movimiento correcto de la información entre las distintas unidades del CPU.
+    </p>
+
+    <img class="img-left" src="../img/u2_1_cache.png" style="width:20%;">
+
+    <h2>Caché Interna</h2>
+
+    
+
+    <p>
+      La caché es una memoria interna de alta velocidad diseñada para almacenar datos e instrucciones que se usan
+      con frecuencia. Su objetivo es reducir la necesidad de acceder a la memoria RAM.
+    </p>
+
+    <p>
+      Se organiza por niveles, cada uno con diferente tamaño y velocidad. Al anticipar qué información será
+      requerida próximamente, disminuye la latencia y mejora el desempeño general del procesador.
+    </p>
+
+    <h2>Funcionamiento en Conjunto</h2>
+
+    <p>
+      1. La Unidad de Control interpreta la instrucción y activa las señales que permiten que los registros obtengan
+      datos y que la ALU realice las operaciones necesarias. Cada módulo responde a estas señales para cumplir su
+      función dentro del ciclo de ejecución.
+    </p>
+
+    <p>
+      2. Los registros proporcionan los valores que la ALU utilizará, mientras que los buses trasladan la información
+      entre las distintas unidades. Este intercambio continuo mantiene el flujo de datos en el interior del CPU.
+    </p>
+
+    <p>
+      3. La caché acelera el acceso a instrucciones y datos frecuentes, reduciendo el tiempo que el procesador necesita
+      para obtener información externa. En conjunto, estos elementos permiten que el CPU ejecute cada instrucción
+      de forma rápida y coordinada.
+    </p>
+
+  </div>
+
+</div>
+
+
+
+</body>
+
+</html>

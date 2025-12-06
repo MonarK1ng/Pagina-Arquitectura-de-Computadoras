@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U1.2.4</title>
+
+  <style>
+
+    /* ------------------ FONDO GENERAL ------------------ */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(39, 24, 126, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(174, 184, 254, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(241, 242, 246, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      background-attachment: fixed;
+    }
+
+    /* ------------------ PANEL LATERAL ------------------ */
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 10px);;
+      overflow-y: auto;
+      padding: 15px;
+      padding-bottom: 40px;
+      box-shadow: 2px 0 14px rgba(0, 0, 0, 0.25);
+      scrollbar-color: #758Bfd #f1f2f6;
+
+      /* MISMO ESTILO RADIAL DEL ORIGINAL */
+      background:
+        linear-gradient(135deg, #f1f2f6 0%, #aeb8fe 100%),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.15), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.15), transparent 60%);
+    }
+
+    .controls h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #27187e;
+    }
+
+
+    /* ------------------ BOTONES DEL ÍNDICE ------------------ */
+
+    .menu-btn {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9em;
+      color: white;
+    }
+
+    /* Color NARANJA (active original) */
+    .menu-main {
+      background: linear-gradient(135deg, #ff8600 0%, #ee5a52 100%);
+    }
+
+    .menu-p {
+      background: #ee5a52;
+    }
+
+    .menu-pdeep {
+      background: #ff8600;
+      color: #000;
+      width: 85%
+    }
+
+    /* Botones de UNIDAD – AZUL OSCURO (como botones originales) */
+    .menu-unit {
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+    }
+
+    /* SUBTEMAS – color más claro */
+    .menu-sub {
+      background: #758bfd;
+      color: #000;
+    }
+
+    /* SUB-SUB TEMAS (1.2.1, 3.1.1, etc.) */
+    .menu-subdeep {
+      background: #aeb8fe; /* un tono más oscuro */
+      color: #000;
+      width: 85%;
+    }
+
+
+    /* ------------------ CONTENIDO ------------------ */
+
+    .container {
+      margin-left: 240px;
+      padding: 20px;
+      color: #444
+    }
+
+    /* ENCABEZADO estilo “cristal”, similar al original */
+    header {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95)),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.1), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.1), transparent 60%);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.3em;
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: #444;
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    #content-area {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      min-height: 500px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+
+    /* IMAGENES */
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    /* Centrada */
+    .img-center {
+      display: block;
+      margin: 20px auto;
+      max-width: 90%;
+    }
+
+    /* Izquierda */
+    .img-left {
+      float: left;
+      margin: 10px 20px 10px 0;
+      max-width: 45%;
+    }
+
+    /* Derecha */
+    .img-right {
+      float: right;
+      margin: 10px 0 10px 20px;
+      max-width: 45%;
+    }
+
+    /* Banner */
+    .img-full {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    /* Fix floats */
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+  <!-- PANEL LATERAL: ÍNDICE -->
+  <div class="controls">
+
+    <!-- MENU PRINCIPAL -->
+    <a href="../index.html">
+      <button class="menu-btn menu-main">Menú Principal</button>
+    </a>
+
+    <!-- UNIDAD 1 -->
+    <a href="u1_index.html">
+      <button class="menu-btn menu-unit">Unidad 1: Arquitectura de Cómputo</button>
+    </a>
+
+    <a href="u1_1.html">
+      <button class="menu-btn menu-sub">1.1 Modelo de arquitecturas</button>
+    </a>
+
+    <a href="u1_2.html">
+      <button class="menu-btn menu-sub">1.2 Análisis de componentes</button>
+    </a>
+
+    <a href="u1_2_1.html">
+      <button class="menu-btn menu-subdeep">1.2.1 CPU</button>
+    </a>
+    <a href="u1_2_2.html">
+      <button class="menu-btn menu-subdeep">1.2.2 Memoria</button>
+    </a>
+    <a href="u1_2_3.html">
+      <button class="menu-btn menu-subdeep">1.2.3 Sistemas E/S</button>
+    </a>
+    <a href="u1_2_4.html">
+      <button class="menu-btn menu-subdeep">1.2.4 Buses</button>
+    </a>
+
+
+    <!-- UNIDAD 2 -->
+    <a href="../u2/u2_index.html">
+      <button class="menu-btn menu-unit">Unidad 2: CPU</button>
+    </a>
+
+    <a href="../u2/u2_1.html">
+      <button class="menu-btn menu-sub">2.1 Organización del procesador</button>
+    </a>
+
+    <a href="../u2/u2_2.html">
+      <button class="menu-btn menu-sub">2.2 Estructura de Registros</button>
+    </a>
+
+    <a href="../u2/u2_3.html">
+      <button class="menu-btn menu-sub">2.3 Ciclo de Instrucción</button>
+    </a>
+
+    <a href="../u2/u2_4.html">
+      <button class="menu-btn menu-sub">2.4 Modos de direccionamiento</button>
+    </a>
+
+
+    <!-- UNIDAD 3 -->
+    <a href="../u3/u3_index.html">
+      <button class="menu-btn menu-unit">Unidad 3: Selección de Componentes</button>
+    </a>
+
+    <a href="../u3/u3_1.html">
+      <button class="menu-btn menu-sub">3.1 Chipset</button>
+    </a>
+
+    <a href="../u3/u3_1_1.html">
+      <button class="menu-btn menu-subdeep">3.1.1 CPU</button>
+    </a>
+    <a href="../u3/u3_1_2.html">
+      <button class="menu-btn menu-subdeep">3.1.2 Controlador de Bus</button>
+    </a>
+    <a href="../u3/u3_1_3.html">
+      <button class="menu-btn menu-subdeep">3.1.3 E/S</button>
+    </a>
+    <a href="../u3/u3_1_4.html">
+      <button class="menu-btn menu-subdeep">3.1.4 Interrupciones</button>
+    </a>
+    <a href="../u3/u3_1_5.html">
+      <button class="menu-btn menu-subdeep">3.1.5 Controlador DMA</button>
+    </a>
+    <a href="../u3/u3_1_6.html">
+      <button class="menu-btn menu-subdeep">3.1.6 Circuitos de temporización</button>
+    </a>
+    <a href="../u3/u3_1_7.html">
+      <button class="menu-btn menu-subdeep">3.1.7 Controladores de video</button>
+    </a>
+
+    <a href="../u3/u3_2.html">
+      <button class="menu-btn menu-sub">3.2 Almacenamiento</button>
+    </a>
+
+    <a href="../u3/u3_3.html">
+      <button class="menu-btn menu-sub">3.3 Fuentes de Alimentación</button>
+    </a>
+
+    <a href="../u3/u3_4.html">
+      <button class="menu-btn menu-sub">3.4 Ambientes de servicio</button>
+    </a>
+
+    <!-- UNIDAD 4 -->
+    <a href="../u4/u4_index.html">
+      <button class="menu-btn menu-unit">Unidad 4: Computación Paralela</button>
+    </a>
+
+    <a href="../u4/u4_1.html">
+      <button class="menu-btn menu-sub">4.1 Aspectos básicos</button>
+    </a>
+
+    <a href="../u4/u4_2.html">
+      <button class="menu-btn menu-sub">4.2 Tipos de computación paralela</button>
+    </a>
+    <a href="../u4/u4_3.html">
+      <button class="menu-btn menu-sub">4.3 Sistemas de memoria compartida</button>
+    </a>
+    <a href="../u4/u4_4.html">
+      <button class="menu-btn menu-sub">4.4 Sistemas de memoria distribuida</button>
+    </a>
+
+
+    <!-- REPORTES/PRACTICAS -->
+    <a href="../pract/p_index.html">
+      <button class="menu-btn menu-p">Reportes/Prácticas</button>
+    </a>
+
+    <a href="../pract/p1.html">
+      <button class="menu-btn menu-pdeep">Práctica 1</button>
+    </a>
+
+    <a href="../pract/p2.html">
+      <button class="menu-btn menu-pdeep">Práctica 2</button>
+    </a>
+    <a href="../pract/p_cpu.html">
+      <button class="menu-btn menu-pdeep">Procesadores</button>
+    </a>
+    <a href="../pract/p_mb.html">
+      <button class="menu-btn menu-pdeep">Tarjeta Madre</button>
+    </a>
+    <a href="../pract/p_3.html">
+      <button class="menu-btn menu-pdeep">Práctica 3</button>
+    </a>
+    <a href="../pract/p_4.html">
+      <button class="menu-btn menu-pdeep">Práctica 4</button>
+    </a>
+
+
+    <!-- COTIZACION -->
+    <a href="../cot/cotiz.html">
+      <button class="menu-btn menu-unit">Cotización</button>
+    </a>
+
+  </div>
+
+
+  <!-- CONTENIDO CENTRAL -->
+  <div class="container">
+
+  <header>
+    <h1>1.2.4 Buses e Interrupciones</h1>
+  </header>
+
+  <div id="content-area">
+
+    <p>
+      Los buses e interrupciones trabajan en conjunto para coordinar la comunicación dentro del sistema.
+      Mientras los buses transportan información entre la CPU, la memoria y los dispositivos, las interrupciones
+      permiten que la CPU responda a eventos importantes durante la ejecución.
+    </p>
+
+    <h2>Buses</h2>
+
+    <img class="img-right" src="../img/u1_2_4_bus.png" style="width:60%;">
+
+    <p>
+      <b>Bus de Datos:</b> transporta la información que se procesa, permitiendo el intercambio de valores
+      numéricos y lógicos. Su ancho determina cuántos bits pueden transmitirse simultáneamente, lo que influye
+      directamente en el rendimiento. Un bus de datos más amplio aumenta la capacidad del sistema.
+    </p>
+
+    <p>
+      <b>Bus de Direcciones:</b> indica la ubicación en memoria donde se debe leer o escribir información.
+      Mientras más líneas tenga, mayor será la cantidad de memoria que el sistema puede manejar. Esto es
+      importante en sistemas modernos donde se trabaja con grandes volúmenes de datos.
+    </p>
+
+    <p>
+      <b>Bus de Control:</b> transporta señales fundamentales como lectura, escritura, permisos, temporización
+      y confirmaciones. También gestiona señales críticas como interrupciones y reset. Gracias a este bus,
+      todas las operaciones se realizan de forma ordenada y sin conflictos entre dispositivos.
+    </p>
+
+    <h2>Interrupciones</h2>
+
+    <p>
+      Las interrupciones permiten que la CPU responda inmediatamente a eventos internos y externos sin detener
+      por completo el programa principal. Funcionan como avisos que indican que un dispositivo o proceso requiere
+      atención urgente. Este mecanismo ayuda a mantener la estabilidad del sistema y la capacidad de multitarea.
+    </p>
+
+    <p>
+      Cuando ocurre una interrupción, la CPU guarda su estado actual, consulta la tabla de vectores para conocer
+      qué rutina ejecutar y atiende el evento. Después, restaura su estado anterior y continúa con la tarea previa.
+      Este proceso garantiza continuidad en la ejecución y evita pérdidas de información.
+    </p>
+
+    <img class="img-center" src="../img/u1_2_4_int.png" style="width:60%;">
+
+  </div>
+
+</div>
+
+
+</body>
+
+</html>

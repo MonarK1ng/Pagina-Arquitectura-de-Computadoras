@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U2.3</title>
+
+  <style>
+
+    /* ------------------ FONDO GENERAL ------------------ */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(39, 24, 126, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(174, 184, 254, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(241, 242, 246, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      background-attachment: fixed;
+    }
+
+    /* ------------------ PANEL LATERAL ------------------ */
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 10px);;
+      overflow-y: auto;
+      padding: 15px;
+      padding-bottom: 40px;
+      box-shadow: 2px 0 14px rgba(0, 0, 0, 0.25);
+      scrollbar-color: #758Bfd #f1f2f6;
+
+      /* MISMO ESTILO RADIAL DEL ORIGINAL */
+      background:
+        linear-gradient(135deg, #f1f2f6 0%, #aeb8fe 100%),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.15), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.15), transparent 60%);
+    }
+
+    .controls h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #27187e;
+    }
+
+
+    /* ------------------ BOTONES DEL ÍNDICE ------------------ */
+
+    .menu-btn {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9em;
+      color: white;
+    }
+
+    /* Color NARANJA (active original) */
+    .menu-main {
+      background: linear-gradient(135deg, #ff8600 0%, #ee5a52 100%);
+    }
+
+    .menu-p {
+      background: #ee5a52;
+    }
+
+    .menu-pdeep {
+      background: #ff8600;
+      color: #000;
+      width: 85%
+    }
+
+    /* Botones de UNIDAD – AZUL OSCURO (como botones originales) */
+    .menu-unit {
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+    }
+
+    /* SUBTEMAS – color más claro */
+    .menu-sub {
+      background: #758bfd;
+      color: #000;
+    }
+
+    /* SUB-SUB TEMAS (1.2.1, 3.1.1, etc.) */
+    .menu-subdeep {
+      background: #aeb8fe; /* un tono más oscuro */
+      color: #000;
+      width: 85%;
+    }
+
+
+    /* ------------------ CONTENIDO ------------------ */
+
+    .container {
+      margin-left: 240px;
+      padding: 20px;
+      color: #444
+    }
+
+    /* ENCABEZADO estilo “cristal”, similar al original */
+    header {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95)),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.1), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.1), transparent 60%);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.3em;
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: #444;
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    #content-area {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      min-height: 500px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+
+    /* IMAGENES */
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      /* Centrada */
+      .img-center {
+        display: block;
+        margin: 20px auto;
+        max-width: 90%;
+      }
+
+      /* Izquierda */
+      .img-left {
+        float: left;
+        margin: 10px 20px 10px 0;
+        max-width: 45%;
+      }
+
+      /* Derecha */
+      .img-right {
+        float: right;
+        margin: 10px 0 10px 20px;
+        max-width: 45%;
+      }
+
+      /* Banner */
+      .img-full {
+        width: 100%;
+        margin: 20px 0;
+      }
+
+      /* Fix floats */
+      .clearfix::after {
+        content: "";
+        display: block;
+        clear: both;
+      }
+
+  </style>
+</head>
+
+<body>
+
+
+  <!-- PANEL LATERAL: ÍNDICE -->
+  <div class="controls">
+
+    <!-- MENU PRINCIPAL -->
+    <a href="../index.html">
+      <button class="menu-btn menu-main">Menú Principal</button>
+    </a>
+
+    <!-- UNIDAD 1 -->
+    <a href="../u1/u1_index.html">
+      <button class="menu-btn menu-unit">Unidad 1: Arquitectura de Cómputo</button>
+    </a>
+
+    <a href="../u1/u1_1.html">
+      <button class="menu-btn menu-sub">1.1 Modelo de arquitecturas</button>
+    </a>
+
+    <a href="../u1/u1_2.html">
+      <button class="menu-btn menu-sub">1.2 Análisis de componentes</button>
+    </a>
+
+    <a href="../u1/u1_2_1.html">
+      <button class="menu-btn menu-subdeep">1.2.1 CPU</button>
+    </a>
+    <a href="../u1/u1_2_2.html">
+      <button class="menu-btn menu-subdeep">1.2.2 Memoria</button>
+    </a>
+    <a href="../u1/u1_2_3.html">
+      <button class="menu-btn menu-subdeep">1.2.3 Sistemas E/S</button>
+    </a>
+    <a href="../u1/u1_2_4.html">
+      <button class="menu-btn menu-subdeep">1.2.4 Buses</button>
+    </a>
+
+
+    <!-- UNIDAD 2 -->
+    <a href="u2_index.html">
+      <button class="menu-btn menu-unit">Unidad 2: CPU</button>
+    </a>
+
+    <a href="u2_1.html">
+      <button class="menu-btn menu-sub">2.1 Organización del procesador</button>
+    </a>
+
+    <a href="u2_2.html">
+      <button class="menu-btn menu-sub">2.2 Estructura de Registros</button>
+    </a>
+
+    <a href="u2_3.html">
+      <button class="menu-btn menu-sub">2.3 Ciclo de Instrucción</button>
+    </a>
+
+    <a href="u2_4.html">
+      <button class="menu-btn menu-sub">2.4 Modos de direccionamiento</button>
+    </a>
+
+
+    <!-- UNIDAD 3 -->
+    <a href="../u3/u3_index.html">
+      <button class="menu-btn menu-unit">Unidad 3: Selección de Componentes</button>
+    </a>
+
+    <a href="../u3/u3_1.html">
+      <button class="menu-btn menu-sub">3.1 Chipset</button>
+    </a>
+
+    <a href="../u3/u3_1_1.html">
+      <button class="menu-btn menu-subdeep">3.1.1 CPU</button>
+    </a>
+    <a href="../u3/u3_1_2.html">
+      <button class="menu-btn menu-subdeep">3.1.2 Controlador de Bus</button>
+    </a>
+    <a href="../u3/u3_1_3.html">
+      <button class="menu-btn menu-subdeep">3.1.3 E/S</button>
+    </a>
+    <a href="../u3/u3_1_4.html">
+      <button class="menu-btn menu-subdeep">3.1.4 Interrupciones</button>
+    </a>
+    <a href="../u3/u3_1_5.html">
+      <button class="menu-btn menu-subdeep">3.1.5 Controlador DMA</button>
+    </a>
+    <a href="../u3/u3_1_6.html">
+      <button class="menu-btn menu-subdeep">3.1.6 Circuitos de temporización</button>
+    </a>
+    <a href="../u3/u3_1_7.html">
+      <button class="menu-btn menu-subdeep">3.1.7 Controladores de video</button>
+    </a>
+
+    <a href="../u3/u3_2.html">
+      <button class="menu-btn menu-sub">3.2 Almacenamiento</button>
+    </a>
+
+    <a href="../u3/u3_3.html">
+      <button class="menu-btn menu-sub">3.3 Fuentes de Alimentación</button>
+    </a>
+
+    <a href="../u3/u3_4.html">
+      <button class="menu-btn menu-sub">3.4 Ambientes de servicio</button>
+    </a>
+
+    <!-- UNIDAD 4 -->
+    <a href="../u4/u4_index.html">
+      <button class="menu-btn menu-unit">Unidad 4: Computación Paralela</button>
+    </a>
+
+    <a href="../u4/u4_1.html">
+      <button class="menu-btn menu-sub">4.1 Aspectos básicos</button>
+    </a>
+
+    <a href="../u4/u4_2.html">
+      <button class="menu-btn menu-sub">4.2 Tipos de computación paralela</button>
+    </a>
+    <a href="../u4/u4_3.html">
+      <button class="menu-btn menu-sub">4.3 Sistemas de memoria compartida</button>
+    </a>
+    <a href="../u4/u4_4.html">
+      <button class="menu-btn menu-sub">4.4 Sistemas de memoria distribuida</button>
+    </a>
+
+
+    <!-- REPORTES/PRACTICAS -->
+    <a href="../pract/p_index.html">
+      <button class="menu-btn menu-p">Reportes/Prácticas</button>
+    </a>
+
+    <a href="../pract/p1.html">
+      <button class="menu-btn menu-pdeep">Práctica 1</button>
+    </a>
+
+    <a href="../pract/p2.html">
+      <button class="menu-btn menu-pdeep">Práctica 2</button>
+    </a>
+    <a href="../pract/p_cpu.html">
+      <button class="menu-btn menu-pdeep">Procesadores</button>
+    </a>
+    <a href="../pract/p_mb.html">
+      <button class="menu-btn menu-pdeep">Tarjeta Madre</button>
+    </a>
+    <a href="../pract/p_3.html">
+      <button class="menu-btn menu-pdeep">Práctica 3</button>
+    </a>
+    <a href="../pract/p_4.html">
+      <button class="menu-btn menu-pdeep">Práctica 4</button>
+    </a>
+
+
+    <!-- COTIZACION -->
+    <a href="../cot/cotiz.html">
+      <button class="menu-btn menu-unit">Cotización</button>
+    </a>
+
+  </div>
+
+
+  <!-- CONTENIDO CENTRAL -->
+  <div class="container">
+
+  <header>
+    <h1>2.3 Ciclo de Instrucción</h1>
+  </header>
+
+  <div id="content-area">
+
+    <p>
+      El ciclo de instrucción representa la secuencia de pasos que sigue el CPU para ejecutar cualquier orden
+      del programa. Este proceso ocurre constantemente y define el ritmo de trabajo del procesador. Cada ciclo
+      involucra mover datos, interpretar operaciones y actualizar el estado interno del sistema.
+    </p>
+
+    <h2>Ciclo FDE (Fetch–Decode–Execute)</h2>
+
+    <img class="img-right" src="../img/u2_3_fde.png" style="width:45%;">
+
+    <p>
+      <b>Fetch:</b> El primer paso del ciclo, aqui el procesador obtiene la instrucción desde la memoria utilizando 
+      la dirección almacenada dentro del Contador de Programa (PC). Esta instrucción pasa luego al registro de 
+      instruccion (IR) y aumentw el contador a la instruccion siguiente para empezar su análisis.
+    </p>
+
+    <p>
+      <b>Decode:</b> La Unidad de Control interpreta la instrucción recibida, identifica qué operación debe realizarse
+      y prepara los todos los operandos (datos) que se requieren en el proceso. Este paso es crucial para activar de manera precisa
+      cada módulo interno e identificar que requiere, ya sea acceso a memoria, a ciertos registros, etc.
+    </p>
+
+    <p>
+      <b>Execute:</b> La Unidad Aritmetico Logica (ALU) realiza el cálculo u operacción solicitada, iniciando 
+      el ciclo de lectura y ejecuccion. Primero los registros intervienen para manejar datos, ya sea en un registro 
+      o memoria segun indique la instrucción, y el sistema actualiza sus posiciones. En esta etapa se genera el 
+      resultado final que será almacenado o utilizado por la siguiente instrucción.
+    </p>
+
+    
+
+    <h2>Segmentación</h2>
+
+    <img class="img-right" src="../img/u2_3_pipeline.png" style="width:55%;">
+
+    <p>
+      La segmentación es una técnica donde se divide el ciclo de instrucción en etapas que pueden trabajar en 
+      paralelo, con el fin de mejorar el rendimiento. Mientras una instrucción se está decodificando, otra puede 
+      estar ejecutándose y una tercera puede estarse obteniendo de memoria. Este enfoque aumenta significativamente 
+      el rendimiento total del CPU.
+    </p>
+
+    <p>
+      La segmentación permite un uso continuo de los recursos internos y reduce el tiempo requerido para completar
+      múltiples instrucciones. Para lograrlo, requiere sincronización cuidadosa y mecanismos que controlen riesgos
+      derivados de dependencias o conflictos.
+    </p>
+
+    <h2>Características y Funciones</h2>
+
+
+    <p>
+      El ciclo de instrucción asegura que todas las operaciones automaticamente se procesen de forma ordenada 
+      mediante señales precisas generadas por la Unidad de Control. Este mecanismo permite que el CPU mantenga una ejecución estable
+      independientemente de la complejidad del programa.
+    </p>
+
+    <p>
+      Su función es coordinar la entrada, el análisis y la ejecución de cada instrucción, asegurando que el procesador
+      responda adecuadamente a cada operación. A través de este ciclo se define la velocidad y eficiencia del CPU 
+      , y por ende el ritmo interno de trabajo de los sistemas modernos.
+    </p>
+
+  </div>
+
+</div>
+
+
+</body>
+
+</html>
