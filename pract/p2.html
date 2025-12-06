@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practica 2</title>
+
+  <style>
+    /* ------------------ FONDO GENERAL ------------------ */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(39, 24, 126, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(174, 184, 254, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(241, 242, 246, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      background-attachment: fixed;
+    }
+
+    /* ------------------ PANEL LATERAL ------------------ */
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 10px);
+      ;
+      overflow-y: auto;
+      padding: 15px;
+      padding-bottom: 40px;
+      box-shadow: 2px 0 14px rgba(0, 0, 0, 0.25);
+      scrollbar-color: #758Bfd #f1f2f6;
+
+      /* MISMO ESTILO RADIAL DEL ORIGINAL */
+      background:
+        linear-gradient(135deg, #f1f2f6 0%, #aeb8fe 100%),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.15), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.15), transparent 60%);
+    }
+
+    .controls h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #27187e;
+    }
+
+
+    /* ------------------ BOTONES DEL ÍNDICE ------------------ */
+
+    .menu-btn {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9em;
+      color: white;
+    }
+
+    /* Color NARANJA (active original) */
+    .menu-main {
+      background: linear-gradient(135deg, #ff8600 0%, #ee5a52 100%);
+    }
+
+    .menu-p {
+      background: #ee5a52;
+    }
+
+    .menu-pdeep {
+      background: #ff8600;
+      color: #000;
+      width: 85%
+    }
+
+    /* Botones de UNIDAD – AZUL OSCURO (como botones originales) */
+    .menu-unit {
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+    }
+
+    /* SUBTEMAS – color más claro */
+    .menu-sub {
+      background: #758bfd;
+      color: #000;
+    }
+
+    /* SUB-SUB TEMAS (1.2.1, 3.1.1, etc.) */
+    .menu-subdeep {
+      background: #aeb8fe;
+      color: #000;
+      width: 85%;
+    }
+
+
+    /* ------------------ CONTENIDO ------------------ */
+
+    .container {
+      margin-left: 240px;
+      padding: 20px;
+      color: #444
+    }
+
+    /* ENCABEZADO estilo “cristal”, similar al original */
+    header {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95)),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.1), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.1), transparent 60%);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      text-align: center;
+
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.3em;
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: #444;
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    #content-area {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      min-height: 500px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .processor-section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      background-color: #f9f6f6;
+    }
+
+    th {
+      background-color: #e2e2ff;
+    }
+
+    /* IMAGENES */
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    /* Centrada */
+    .img-center {
+      display: block;
+      margin: 20px auto;
+      max-width: 90%;
+    }
+
+    /* Izquierda */
+    .img-right {
+      float: left;
+      margin: 10px 20px 10px 0;
+      max-width: 45%;
+    }
+
+    /* Derecha */
+    .img-right {
+      float: right;
+      margin: 10px 0 10px 20px;
+      max-width: 45%;
+    }
+
+    /* Banner */
+    .img-full {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    /* Fix floats */
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- PANEL LATERAL: ÍNDICE -->
+  <div class="controls">
+
+    <!-- MENU PRINCIPAL -->
+    <a href="../index.html">
+      <button class="menu-btn menu-main">Menú Principal</button>
+    </a>
+
+    <!-- UNIDAD 1 -->
+    <a href="../u1/u1_index.html">
+      <button class="menu-btn menu-unit">Unidad 1: Arquitectura de Cómputo</button>
+    </a>
+
+    <a href="../u1/u1_1.html">
+      <button class="menu-btn menu-sub">1.1 Modelo de arquitecturas</button>
+    </a>
+
+    <a href="../u1/u1_2.html">
+      <button class="menu-btn menu-sub">1.2 Análisis de componentes</button>
+    </a>
+
+    <a href="../u1/u1_2_1.html">
+      <button class="menu-btn menu-subdeep">1.2.1 CPU</button>
+    </a>
+    <a href="../u1/u1_2_2.html">
+      <button class="menu-btn menu-subdeep">1.2.2 Memoria</button>
+    </a>
+    <a href="../u1/u1_2_3.html">
+      <button class="menu-btn menu-subdeep">1.2.3 Sistemas E/S</button>
+    </a>
+    <a href="../u1/u1_2_4.html">
+      <button class="menu-btn menu-subdeep">1.2.4 Buses</button>
+    </a>
+
+
+    <!-- UNIDAD 2 -->
+    <a href="../u2/u2_index.html">
+      <button class="menu-btn menu-unit">Unidad 2: CPU</button>
+    </a>
+
+    <a href="../u2/u2_1.html">
+      <button class="menu-btn menu-sub">2.1 Organización del procesador</button>
+    </a>
+
+    <a href="../u2/u2_2.html">
+      <button class="menu-btn menu-sub">2.2 Estructura de Registros</button>
+    </a>
+
+    <a href="../u2/u2_3.html">
+      <button class="menu-btn menu-sub">2.3 Ciclo de Instrucción</button>
+    </a>
+
+    <a href="../u2/u2_4.html">
+      <button class="menu-btn menu-sub">2.4 Modos de direccionamiento</button>
+    </a>
+
+
+    <!-- UNIDAD 3 -->
+    <a href="../u3/u3_index.html">
+      <button class="menu-btn menu-unit">Unidad 3: Selección de Componentes</button>
+    </a>
+
+    <a href="../u3/u3_1.html">
+      <button class="menu-btn menu-sub">3.1 Chipset</button>
+    </a>
+
+    <a href="../u3/u3_1_1.html">
+      <button class="menu-btn menu-subdeep">3.1.1 CPU</button>
+    </a>
+    <a href="../u3/u3_1_2.html">
+      <button class="menu-btn menu-subdeep">3.1.2 Controlador de Bus</button>
+    </a>
+    <a href="../u3/u3_1_3.html">
+      <button class="menu-btn menu-subdeep">3.1.3 E/S</button>
+    </a>
+    <a href="../u3/u3_1_4.html">
+      <button class="menu-btn menu-subdeep">3.1.4 Interrupciones</button>
+    </a>
+    <a href="../u3/u3_1_5.html">
+      <button class="menu-btn menu-subdeep">3.1.5 Controlador DMA</button>
+    </a>
+    <a href="../u3/u3_1_6.html">
+      <button class="menu-btn menu-subdeep">3.1.6 Circuitos de temporización</button>
+    </a>
+    <a href="../u3/u3_1_7.html">
+      <button class="menu-btn menu-subdeep">3.1.7 Controladores de video</button>
+    </a>
+
+    <a href="../u3/u3_2.html">
+      <button class="menu-btn menu-sub">3.2 Almacenamiento</button>
+    </a>
+
+    <a href="../u3/u3_3.html">
+      <button class="menu-btn menu-sub">3.3 Fuentes de Alimentación</button>
+    </a>
+
+    <a href="../u3/u3_4.html">
+      <button class="menu-btn menu-sub">3.4 Ambientes de servicio</button>
+    </a>
+
+    <!-- UNIDAD 4 -->
+    <a href="../u4/u4_index.html">
+      <button class="menu-btn menu-unit">Unidad 4: Computación Paralela</button>
+    </a>
+
+    <a href="../u4/u4_1.html">
+      <button class="menu-btn menu-sub">4.1 Aspectos básicos</button>
+    </a>
+
+    <a href="../u4/u4_2.html">
+      <button class="menu-btn menu-sub">4.2 Tipos de computación paralela</button>
+    </a>
+    <a href="../u4/u4_3.html">
+      <button class="menu-btn menu-sub">4.3 Sistemas de memoria compartida</button>
+    </a>
+    <a href="../u4/u4_4.html">
+      <button class="menu-btn menu-sub">4.4 Sistemas de memoria distribuida</button>
+    </a>
+
+
+    <!-- REPORTES/PRACTICAS -->
+    <a href="p_index.html">
+      <button class="menu-btn menu-p">Reportes/Prácticas</button>
+    </a>
+
+    <a href="p1.html">
+      <button class="menu-btn menu-pdeep">Práctica 1</button>
+    </a>
+
+    <a href="p2.html">
+      <button class="menu-btn menu-pdeep">Práctica 2</button>
+    </a>
+    <a href="p_cpu.html">
+      <button class="menu-btn menu-pdeep">Procesadores</button>
+    </a>
+    <a href="p_mb.html">
+      <button class="menu-btn menu-pdeep">Tarjeta Madre</button>
+    </a>
+    <a href="p_3.html">
+      <button class="menu-btn menu-pdeep">Práctica 3</button>
+    </a>
+    <a href="p_4.html">
+      <button class="menu-btn menu-pdeep">Práctica 4</button>
+    </a>
+
+
+    <!-- COTIZACION -->
+    <a href="../cot/cotiz.html">
+      <button class="menu-btn menu-unit">Cotización</button>
+    </a>
+
+  </div>
+
+
+
+  <!-- CONTENIDO CENTRAL -->
+  <div class="container">
+    <header>
+      <h1>Práctica 2 – Características de Procesadores</h1>
+    </header>
+
+    <div id="content-area">
+
+      <img class="img-right" src="../img/practicas/p2_portada.png" alt="Equipo" style="width:30%;">
+
+      <h2>Reporte de práctica 2</h2>
+
+      <p><b>Alumno:</b> Reynaldo Enríquez Zamorano<br>
+        <b>Materia:</b> Arquitectura de Computadoras<br>
+        <b>Fecha:</b> 10/10/2025<br><br>
+        <b><i>1.&emsp;Desconecta el procesador del su socket en las 5 maquinas<br>
+            2.&emsp;Toma fotos y explica las características de cada uno<br>
+            3.&emsp;Toma foto al modelo del procesador e investiga</i></b>
+      </p>
+
+      <h2>Definiciones</h2>
+
+      <p>Entre las características de un CPU, las más importantes incluyen:</p>
+
+      <h3>Velocidad</h3>
+      <p>La velocidad de un procesador se refiere a la velocidad de reloj (frecuencia). Esto mide la cantidad de ciclos
+        que ejecuta el CPU por segundo, medida en Hertz, normalmente en gigahertz (GHz). En este caso, un "ciclo" es la
+        unidad básica que mide la velocidad de una CPU. Durante cada ciclo, miles de millones de transistores dentro del
+        procesador se abren y cierran. Así es como la CPU ejecuta los cálculos que figuran en las instrucciones que
+        recibe.</p>
+
+      <h3>Cache</h3>
+      <p>La memoria caché es el intermedio entre CPU y memoria RAM, la cual el procesador tiene acceso directo, casi
+        instantáneo, y en la que se almacenan los datos e instrucciones que más emplea para tenerlos a mano cuando haga
+        falta sin necesidad de tener que volverlos a pedir desde la fuente original. Los procesadores actualmente
+        cuentan con varios niveles de caché bastante diferenciados. Normalmente, los procesadores actuales tienen caché
+        L1, L2, L3, y en algunos casos L4. Cada nivel mayor se aleja mas al procesador, aumenta capacidad y pierde
+        velocidad.</p>
+
+      <h3>Núcleos</h3>
+      <p>Los núcleos de un procesador son unidades de procesamiento independientes dentro del CPU. Cada núcleo funciona
+        como una unidad de procesamiento completa, capaz de ejecutar instrucciones de manera autónoma. En otras
+        palabras, un procesador de múltiples núcleos tiene la capacidad de realizar múltiples tareas simultáneamente, lo
+        que mejora significativamente el rendimiento y la eficiencia en la ejecución de programas y aplicaciones.</p>
+
+      <p>En la práctica, se remueven los procesadores de su Socket.</p>
+
+      <p>El socket, que se encuentra en la tarjeta madre, es el sitio donde se instala el procesador. Determina el tipo
+        de procesador que puede instalarse, ya que este elemento no se puede modificar para hacerlo compatible con otros
+        procesadores para los que no ha sido diseñado.</p>
+
+      <h2>Características de Procesadores</h2>
+
+      <div class="processor-section">
+        <img class="img-right" src="../img/practicas/p2_1.png" alt="Intel Pentium 4" style="width:20%;">
+        <p>El primer procesador que se removió fue un <b>Intel Pentium 4</b>, modelo <b>800EB</b></p>
+        <ul>
+          <li><b>Velocidad:</b> 800 MHz, con una velocidad de buses de 133 MHz.</li>
+          <li><b>Cache:</b> Tiene dos niveles de cache:
+            <ul>
+              <li><b>L1, con 32 kb</b></li>
+              <li><b>L2, con 256 kb</b></li>
+            </ul>
+          </li>
+          <li><b>Núcleos:</b> Tiene un solo núcleo, con un solo hilo.</li>
+        </ul>
+        <p>Otras características de este CPU incluyen que requiere un Socket 370, su arquitectura informática es x86,
+          con sus requerimientos eléctricos siendo mínimo 1.57V y máximo 1.69V, con 1.65V recomendado.</p>
+      </div>
+
+      <div class="processor-section">
+        <img class="img-right" src="../img/practicas/p2_2.png" alt="Intel Xeon" style="width:20%;">
+        <p>El segundo procesador que se removió fue uno de la familia <b>Intel Xeon E3-1200</b>, el modelo siendo
+          desconocido, pero probablemente siendo un 1270 v6. Aunque tiene diferentes especificaciones, procesadores de
+          esta familia comparten ciertas características:</p>
+        <ul>
+          <li><b>Velocidad:</b> La velocidad máxima es de hasta 4.1 GHz, con una velocidad base de 3.8 GHz.</li>
+          <li><b>Cache:</b> Tiene 3 niveles de cache:
+            <ul>
+              <li><b>L1, con 8 memorias de 32 kb</b></li>
+              <li><b>L2, con 4 memorias de 256 kb</b></li>
+              <li><b>L3, con 8 MB</b></li>
+            </ul>
+          </li>
+          <li><b>Núcleos:</b> Tiene 4 núcleos, con un total de 8 hilos.</li>
+        </ul>
+        <p>Otras características de este CPU incluyen que requiere un Socket 1151 o H4, su arquitectura informática es
+          x86, con sus requerimientos eléctricos siendo entre 0.55V y 1.52V.</p>
+      </div>
+
+      <div class="processor-section">
+        <img class="img-right" src="../img/practicas/p2_3.png" alt="Intel Celeron D" style="width:20%;">
+        <p>El tercer procesador que se removió fue un <b>Intel Celeron D</b>, modelo <b>SL98W</b>:</p>
+        <ul>
+          <li><b>Velocidad:</b> 2.5 GHz, con una velocidad de bus de 533 MHz.</li>
+          <li><b>Cache:</b> Tiene 2 niveles de cache:
+            <ul>
+              <li><b>L1, con 28 kb</b></li>
+              <li><b>L2, con 256 kb</b></li>
+            </ul>
+          </li>
+          <li><b>Núcleos:</b> Tiene solo un núcleo.</li>
+        </ul>
+        <p>Es de arquitectura x86 y requiere un voltaje entre 1.25V y 1.4V.</p>
+      </div>
+
+      <div class="processor-section">
+        <img class="img-right" src="../img/practicas/p2_4.png" alt="Intel Pentium Dual-Core" style="width:20%;">
+        <p>El cuarto procesador que se removió fue un <b>Intel Pentium Dual-Core</b>, modelo <b>E2140</b></p>
+        <ul>
+          <li><b>Velocidad:</b> 1.6 GHz, con una velocidad de buses de 800 MHz.</li>
+          <li><b>Cache:</b> Tiene dos niveles de cache:
+            <ul>
+              <li><b>L1, con 64 kb</b></li>
+              <li><b>L2, con 1 MB</b></li>
+            </ul>
+          </li>
+          <li><b>Núcleos:</b> Tiene 2 núcleos.</li>
+        </ul>
+        <p>Otras características de este CPU incluyen que requiere un Socket 775, su arquitectura informática es x86,
+          con sus requerimientos eléctricos siendo entre 1.6152V y 1.312V.</p>
+      </div>
+
+      <div class="processor-section">
+        <img class="img-right" src="../img/practicas/p2_5.png" alt="Intel Celeron" style="width:20%;">
+        <p>El ultimo procesador removido fue un <b>Intel Celeron</b>, modelo <b>SL6RM</b></p>
+        <ul>
+          <li><b>Velocidad:</b> 1.1 GHz, con una velocidad de buses de 100 MHz.</li>
+          <li><b>Cache:</b> Tiene dos niveles de cache:
+            <ul>
+              <li><b>L1, con 64 kb</b></li>
+              <li><b>L2, con 256 kb</b></li>
+            </ul>
+          </li>
+          <li><b>Núcleos:</b> Tiene solo un núcleo.</li>
+        </ul>
+        <p>Requiere un Socket 370 para instalarse en un equipo.</p>
+      </div>
+
+      <h2>Especificaciones Detalladas</h2>
+
+      <h3>Especificaciones del Intel Pentium III 800EB (Socket 370)</h3>
+      <h4>Información general</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Tipo</b></td>
+          <td>CPU / Microprocesador</td>
+        </tr>
+        <tr>
+          <td><b>Segmento de mercado</b></td>
+          <td>Escritorio (Desktop)</td>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Pentium III</td>
+        </tr>
+        <tr>
+          <td><b>Número de modelo</b></td>
+          <td>800EB</td>
+        </tr>
+        <tr>
+          <td><b>Números de parte del CPU</b></td>
+          <td>RB80526PZ800256 (OEM/tray)<br>BX80526C800256E (versión en caja)</td>
+        </tr>
+        <tr>
+          <td><b>Frecuencia</b></td>
+          <td>800 MHz</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad del bus</b></td>
+          <td>133 MHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de reloj</b></td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>370 pines Flip-Chip Pin Grid Array (FC-PGA)<br>1.95" x 1.95" (4.95 cm x 4.95 cm)</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de introducción</b></td>
+          <td>20 de diciembre de 1999</td>
+        </tr>
+        <tr>
+          <td><b>Precio al lanzamiento</b></td>
+          <td>$851 USD</td>
+        </tr>
+      </table>
+
+      <h4>Números S-spec</h4>
+      <p><b>Procesadores de prueba (ES/QS):</b></p>
+      <table>
+        <tr>
+          <th><b>Número de parte</b></th>
+          <th><b>QN23</b></th>
+          <th><b>QP15</b></th>
+          <th><b>QS22</b></th>
+          <th><b>QS81</b></th>
+        </tr>
+        <tr>
+          <td>BX80526C800256E</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>RB80526PZ800256</td>
+          <td>+</td>
+          <td>+</td>
+          <td>+</td>
+          <td>+</td>
+        </tr>
+      </table>
+
+      <p><b>Procesadores de producción:</b></p>
+      <table>
+        <tr>
+          <th><b>Número de parte</b></th>
+          <th><b>SL3VE</b></th>
+          <th><b>SL3WB</b></th>
+          <th><b>SL3Y2</b></th>
+          <th><b>SL4CD</b></th>
+          <th><b>SL4MB</b></th>
+          <th><b>SL52P</b></th>
+        </tr>
+        <tr>
+          <td>BX80526C800256E</td>
+          <td>+</td>
+          <td></td>
+          <td></td>
+          <td>+</td>
+          <td>+</td>
+          <td>+</td>
+        </tr>
+        <tr>
+          <td>RB80526PZ800256</td>
+          <td></td>
+          <td>+</td>
+          <td>+</td>
+          <td>+</td>
+          <td></td>
+          <td>+</td>
+        </tr>
+      </table>
+
+      <h4>Arquitectura / Microarquitectura</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>P6</td>
+        </tr>
+        <tr>
+          <td><b>Nombre en clave del núcleo</b></td>
+          <td>Coppermine</td>
+        </tr>
+        <tr>
+          <td><b>Stepping del núcleo</b></td>
+          <td>cA2, cB0, cC0, cD0</td>
+        </tr>
+        <tr>
+          <td><b>CPUIDs</b></td>
+          <td>681, 683, 686, 68A</td>
+        </tr>
+        <tr>
+          <td><b>Proceso de fabricación</b></td>
+          <td>0.18 micras</td>
+        </tr>
+        <tr>
+          <td><b>Transistores</b></td>
+          <td>28 millones</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño del chip (die)</b></td>
+          <td>104.6 mm² (CPUID 0683h)<br>90 mm² (CPUID 0686h)<br>94.7 mm² (CPUID 068Ah)</td>
+        </tr>
+        <tr>
+          <td><b>Ancho de datos</b></td>
+          <td>32 bits</td>
+        </tr>
+        <tr>
+          <td><b>Ancho del bus de datos</b></td>
+          <td>64 bits</td>
+        </tr>
+        <tr>
+          <td><b>Número de núcleos</b></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td><b>Número de hilos</b></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td><b>Unidad de punto flotante</b></td>
+          <td>Integrada</td>
+        </tr>
+        <tr>
+          <td><b>Caché de nivel 1 (L1)</b></td>
+          <td>16 KB de instrucciones + 16 KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Caché de nivel 2 (L2)</b></td>
+          <td>256 KB integrada a velocidad completa</td>
+        </tr>
+        <tr>
+          <td><b>Multiprocesamiento</b></td>
+          <td>Hasta 2 procesadores</td>
+        </tr>
+      </table>
+
+      <h4>Parámetros eléctricos / térmicos</h4>
+      <table>
+        <tr>
+          <th><b>Parámetro</b></th>
+          <th><b>Valor</b></th>
+        </tr>
+        <tr>
+          <td><b>Voltaje del núcleo (mínimo/recomendado/máximo)</b></td>
+          <td>1.57V / 1.65V / 1.69V<br>1.62V / 1.7V / 1.74V<br>1.67V / 1.75V / 1.79V</td>
+        </tr>
+        <tr>
+          <td><b>Temperatura de operación (mín./máx.)</b></td>
+          <td>0°C -- 80°C</td>
+        </tr>
+        <tr>
+          <td><b>Disipación máxima de potencia</b></td>
+          <td>27.2 W (a 1.7V)<br>29.05 W (a 1.75V)</td>
+        </tr>
+        <tr>
+          <td><b>Potencia de diseño térmico (TDP)</b></td>
+          <td>20.8 W (CPUID 0686h)<br>24.5 W (CPUID 068Ah)</td>
+        </tr>
+      </table>
+
+      <h3>Especificaciones del Intel Xeon E3-1270 v6</h3>
+      <h4>Información general</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Tipo</b></td>
+          <td>CPU / Microprocesador</td>
+        </tr>
+        <tr>
+          <td><b>Segmento de mercado</b></td>
+          <td>Servidor</td>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Xeon E3-1200 v6</td>
+        </tr>
+        <tr>
+          <td><b>Número de modelo</b></td>
+          <td>E3-1270 v6</td>
+        </tr>
+        <tr>
+          <td><b>Números de parte del CPU</b></td>
+          <td>CM8067702870648 (OEM/tray)<br>BX80677E31270V6 (versión en caja)</td>
+        </tr>
+        <tr>
+          <td><b>Frecuencia base</b></td>
+          <td>3.8 GHz / 3800 MHz</td>
+        </tr>
+        <tr>
+          <td><b>Frecuencia turbo máxima</b></td>
+          <td>4.2 GHz / 4200 MHz</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad del bus</b></td>
+          <td>8 GT/s (Direct Media Interface)</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de reloj</b></td>
+          <td>38</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>1151 pines Flip-Chip Land Grid Array (FC-LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño físico</b></td>
+          <td>1.48" × 1.48" (3.75 cm × 3.75 cm)</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de introducción</b></td>
+          <td>28 de marzo de 2017</td>
+        </tr>
+        <tr>
+          <td><b>Precio al lanzamiento</b></td>
+          <td>$328 USD</td>
+        </tr>
+      </table>
+
+      <h4>Números S-spec</h4>
+      <table>
+        <tr>
+          <th><b>Número de parte</b></th>
+          <th><b>Procesadores ES/QS</b></th>
+          <th><b>Procesadores de producción</b></th>
+        </tr>
+        <tr>
+          <td>BX80677E31270V6</td>
+          <td></td>
+          <td>+</td>
+        </tr>
+        <tr>
+          <td>CM8067702870648</td>
+          <td></td>
+          <td>+</td>
+        </tr>
+        <tr>
+          <td>Desconocido</td>
+          <td>+</td>
+          <td></td>
+        </tr>
+      </table>
+
+      <h4>Arquitectura / Microarquitectura</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Kaby Lake</td>
+        </tr>
+        <tr>
+          <td><b>Nombre en clave del núcleo</b></td>
+          <td>Kaby Lake-S</td>
+        </tr>
+        <tr>
+          <td><b>Stepping del núcleo</b></td>
+          <td>B0</td>
+        </tr>
+        <tr>
+          <td><b>Proceso de fabricación</b></td>
+          <td>0.014 micras (14 nm)</td>
+        </tr>
+        <tr>
+          <td><b>Ancho de datos</b></td>
+          <td>64 bits</td>
+        </tr>
+        <tr>
+          <td><b>Número de núcleos</b></td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td><b>Número de hilos</b></td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td><b>Unidad de punto flotante</b></td>
+          <td>Integrada</td>
+        </tr>
+        <tr>
+          <td><b>Caché de nivel 1 (L1)</b></td>
+          <td>4 × 32 KB de instrucciones + 4 × 32 KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Caché de nivel 2 (L2)</b></td>
+          <td>4 × 256 KB</td>
+        </tr>
+        <tr>
+          <td><b>Caché de nivel 3 (L3)</b></td>
+          <td>8 MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física máxima</b></td>
+          <td>64 GB</td>
+        </tr>
+        <tr>
+          <td><b>Multiprocesamiento</b></td>
+          <td>Uniprocesador</td>
+        </tr>
+      </table>
+
+      <h4>Extensiones y tecnologías</h4>
+      <table>
+        <tr>
+          <th><b>Tecnología</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+        <tr>
+          <td><b>MMX</b></td>
+          <td>Instrucciones MMX</td>
+        </tr>
+        <tr>
+          <td><b>SSE, SSE2, SSE3, SSSE3, SSE4.1, SSE4.2</b></td>
+          <td>Extensiones SIMD (Streaming SIMD Extensions)</td>
+        </tr>
+        <tr>
+          <td><b>AES</b></td>
+          <td>Instrucciones de cifrado avanzado (Advanced Encryption Standard)</td>
+        </tr>
+        <tr>
+          <td><b>AVX / AVX2</b></td>
+          <td>Extensiones vectoriales avanzadas</td>
+        </tr>
+        <tr>
+          <td><b>BMI1 / BMI2</b></td>
+          <td>Instrucciones de manipulación de bits</td>
+        </tr>
+        <tr>
+          <td><b>F16C</b></td>
+          <td>Conversión de punto flotante de 16 bits</td>
+        </tr>
+        <tr>
+          <td><b>FMA3</b></td>
+          <td>Instrucciones de multiplicación y suma fusionada de 3 operandos</td>
+        </tr>
+        <tr>
+          <td><b>EM64T (Intel 64)</b></td>
+          <td>Tecnología de 64 bits extendida</td>
+        </tr>
+        <tr>
+          <td><b>HT (Hyper-Threading)</b></td>
+          <td>Tecnología de multihilo simultáneo</td>
+        </tr>
+        <tr>
+          <td><b>VT-x / VT-d</b></td>
+          <td>Tecnologías de virtualización y de E/S dirigida</td>
+        </tr>
+        <tr>
+          <td><b>Turbo Boost 2.0</b></td>
+          <td>Aumento dinámico de frecuencia</td>
+        </tr>
+        <tr>
+          <td><b>TSX</b></td>
+          <td>Extensiones de sincronización transaccional</td>
+        </tr>
+      </table>
+
+      <h4>Características de seguridad</h4>
+      <table>
+        <tr>
+          <th><b>Tecnología</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+        <tr>
+          <td><b>NX / XD</b></td>
+          <td>Bit de desactivación de ejecución</td>
+        </tr>
+        <tr>
+          <td><b>MPX</b></td>
+          <td>Extensiones de protección de memoria</td>
+        </tr>
+        <tr>
+          <td><b>SGX</b></td>
+          <td>Extensiones de seguridad por software (Software Guard Extensions)</td>
+        </tr>
+        <tr>
+          <td><b>TXT</b></td>
+          <td>Tecnología de ejecución confiable (Trusted Execution Technology)</td>
+        </tr>
+      </table>
+
+      <h4>Periféricos y componentes integrados</h4>
+      <table>
+        <tr>
+          <th><b>Componente</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+        <tr>
+          <td><b>Controlador de memoria</b></td>
+          <td>1 controlador, 2 canales por controlador, 2 canales totales</td>
+        </tr>
+        <tr>
+          <td><b>Memoria compatible</b></td>
+          <td>DDR3L-1866, DDR4-2400</td>
+        </tr>
+        <tr>
+          <td><b>Compatibilidad ECC</b></td>
+          <td>Sí</td>
+        </tr>
+        <tr>
+          <td><b>Interconexiones adicionales</b></td>
+          <td>Direct Media Interface 3.0, PCI Express 3.0</td>
+        </tr>
+      </table>
+
+      <h4>Parámetros eléctricos / térmicos</h4>
+      <table>
+        <tr>
+          <th><b>Componente</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+        <tr>
+          <td><b>Voltaje del núcleo (Vcore)</b></td>
+          <td>0.55 V -- 1.52 V</td>
+        </tr>
+        <tr>
+          <td><b>Potencia de diseño térmico (TDP)</b></td>
+          <td>72 W</td>
+        </tr>
+      </table>
+
+      <h3>Especificaciones del Intel Celeron D 336 (SL98W)</h3>
+      <h4>Información general</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Tipo</b></td>
+          <td>CPU / Microprocesador</td>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Celeron D</td>
+        </tr>
+        <tr>
+          <td><b>Número de procesador</b></td>
+          <td>336</td>
+        </tr>
+        <tr>
+          <td><b>Números de parte</b></td>
+          <td>HH80547RE072CN<br>BX80547RE2800CN</td>
+        </tr>
+        <tr>
+          <td><b>Frecuencia</b></td>
+          <td>2.8 GHz</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad del bus</b></td>
+          <td>533 MHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de reloj</b></td>
+          <td>21</td>
+        </tr>
+        <tr>
+          <td><b>Tipo de encapsulado</b></td>
+          <td>775 pines FC-LGA (Flip-Chip Land Grid Array)</td>
+        </tr>
+      </table>
+
+      <h4>Arquitectura / Microarquitectura / Otros datos</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Identificador CPUID</b></td>
+          <td>0F49h</td>
+        </tr>
+        <tr>
+          <td><b>Stepping del núcleo</b></td>
+          <td>G1</td>
+        </tr>
+        <tr>
+          <td><b>Muestra de calificación (Qualification Sample)</b></td>
+          <td>QFPJ</td>
+        </tr>
+        <tr>
+          <td><b>Stepping anterior</b></td>
+          <td>SL8H9</td>
+        </tr>
+        <tr>
+          <td><b>Tecnología de fabricación</b></td>
+          <td>0.09 micras (90 nm)</td>
+        </tr>
+        <tr>
+          <td><b>Caché L2</b></td>
+          <td>256 KB</td>
+        </tr>
+        <tr>
+          <td><b>Tecnología EM64T (Intel 64)</b></td>
+          <td>Sí</td>
+        </tr>
+        <tr>
+          <td><b>Voltaje del núcleo (Vcore)</b></td>
+          <td>1.25 V -- 1.4 V</td>
+        </tr>
+        <tr>
+          <td><b>Temperatura máxima del encapsulado</b></td>
+          <td>67.7 °C</td>
+        </tr>
+        <tr>
+          <td><b>Potencia de diseño térmico (TDP)</b></td>
+          <td>84 W</td>
+        </tr>
+      </table>
+
+      <h3>Especificaciones del Intel Pentium Dual-Core E2140 (SLA93)</h3>
+      <h4>Información general</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Tipo</b></td>
+          <td>CPU / Microprocesador</td>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Pentium Dual-Core</td>
+        </tr>
+        <tr>
+          <td><b>Número de procesador</b></td>
+          <td>E2140</td>
+        </tr>
+        <tr>
+          <td><b>Números de parte</b></td>
+          <td>HH80557PG0251M<br>BX80557E2140<br>BXC80557E2140</td>
+        </tr>
+        <tr>
+          <td><b>Marcado del procesador</b></td>
+          <td>1.60GHz / 1M / 800 / 06</td>
+        </tr>
+        <tr>
+          <td><b>Frecuencia base</b></td>
+          <td>1.6 GHz</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad del bus</b></td>
+          <td>800 MHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de reloj</b></td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td><b>Tipo de encapsulado</b></td>
+          <td>775 pines FC-LGA6 (Flip-Chip Land Grid Array)</td>
+        </tr>
+      </table>
+
+      <h4>Arquitectura / Microarquitectura / Otros datos</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Identificador CPUID</b></td>
+          <td>06FDh</td>
+        </tr>
+        <tr>
+          <td><b>Stepping del núcleo</b></td>
+          <td>M0</td>
+        </tr>
+        <tr>
+          <td><b>Muestra de calificación (Qualification Sample)</b></td>
+          <td>QYRG</td>
+        </tr>
+        <tr>
+          <td><b>Stepping anterior</b></td>
+          <td>SLA3J</td>
+        </tr>
+        <tr>
+          <td><b>Núcleo del procesador</b></td>
+          <td>Allendale</td>
+        </tr>
+        <tr>
+          <td><b>Tecnología de fabricación</b></td>
+          <td>0.065 micras (65 nm)</td>
+        </tr>
+        <tr>
+          <td><b>Número de núcleos</b></td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td><b>Caché L2</b></td>
+          <td>1 MB</td>
+        </tr>
+      </table>
+
+      <h4>Características y tecnologías</h4>
+      <table>
+        <tr>
+          <th><b>Tecnología</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+        <tr>
+          <td><b>EM64T (Intel 64)</b></td>
+          <td>Soporte para arquitectura de 64 bits</td>
+        </tr>
+        <tr>
+          <td><b>Enhanced SpeedStep</b></td>
+          <td>Administración dinámica de voltaje y frecuencia</td>
+        </tr>
+        <tr>
+          <td><b>Execute Disable Bit</b></td>
+          <td>Protección contra ejecución de código malicioso</td>
+        </tr>
+        <tr>
+          <td><b>Extended Halt State</b></td>
+          <td>Estado de bajo consumo C1E</td>
+        </tr>
+        <tr>
+          <td><b>Extended Stop Grant State</b></td>
+          <td>Modo avanzado de ahorro de energía</td>
+        </tr>
+        <tr>
+          <td><b>Thermal Monitor 2</b></td>
+          <td>Control térmico avanzado del procesador</td>
+        </tr>
+      </table>
+
+      <h4>Parámetros eléctricos y térmicos</h4>
+      <table>
+        <tr>
+          <th><b>Componente</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+        <tr>
+          <td><b>Voltaje del núcleo (Vcore)</b></td>
+          <td>1.162 V -- 1.312 V</td>
+        </tr>
+        <tr>
+          <td><b>Temperatura máxima del encapsulado</b></td>
+          <td>73.2 °C</td>
+        </tr>
+        <tr>
+          <td><b>Potencia de diseño térmico (TDP)</b></td>
+          <td>65 W</td>
+        </tr>
+      </table>
+
+      <h3>Especificaciones del Intel Celeron 1.1 GHz (SL6RM)</h3>
+      <p>Estas especificaciones pueden usarse para listados a corto plazo en sitios de subastas y clasificados.</p>
+
+      <h4>Información general</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Tipo</b></td>
+          <td>CPU / Microprocesador</td>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Celeron</td>
+        </tr>
+        <tr>
+          <td><b>Números de parte</b></td>
+          <td>BX80530F1100256<br>RK80530RY005256</td>
+        </tr>
+        <tr>
+          <td><b>Frecuencia</b></td>
+          <td>1.1 GHz</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad del bus</b></td>
+          <td>100 MHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de reloj</b></td>
+          <td>11</td>
+        </tr>
+        <tr>
+          <td><b>Tipo de encapsulado</b></td>
+          <td>370 pines FC-PGA2 (Flip-Chip Pin Grid Array 2)</td>
+        </tr>
+      </table>
+
+      <h4>Arquitectura / Microarquitectura / Otros datos</h4>
+      <table>
+        <tr>
+          <th><b>Categoría</b></th>
+          <th><b>Detalle</b></th>
+        </tr>
+        <tr>
+          <td><b>Identificador CPUID</b></td>
+          <td>06B4h</td>
+        </tr>
+        <tr>
+          <td><b>Stepping del núcleo</b></td>
+          <td>B1</td>
+        </tr>
+        <tr>
+          <td><b>Núcleo del procesador</b></td>
+          <td>Tualatin-256</td>
+        </tr>
+        <tr>
+          <td><b>Tecnología de fabricación</b></td>
+          <td>0.13 micras (130 nm)</td>
+        </tr>
+        <tr>
+          <td><b>Número de núcleos</b></td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td><b>Caché L2</b></td>
+          <td>256 KB</td>
+        </tr>
+      </table>
+
+      <h4>Características y tecnologías</h4>
+      <table>
+        <tr>
+          <th><b>Tecnología</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+        <tr>
+          <td><b>MMX</b></td>
+          <td>Instrucciones multimedia optimizadas</td>
+        </tr>
+        <tr>
+          <td><b>SSE</b></td>
+          <td>Extensiones SIMD para operaciones vectoriales</td>
+        </tr>
+      </table>
+
+      <h4>Parámetros eléctricos y térmicos</h4>
+      <table>
+        <tr>
+          <th><b>Componente</b></th>
+          <th><b>Descripción</b></th>
+        </tr>
+        <tr>
+          <td><b>Voltaje del núcleo (Vcore)</b></td>
+          <td>1.5 V</td>
+        </tr>
+        <tr>
+          <td><b>Temperatura máxima del encapsulado</b></td>
+          <td>69 °C</td>
+        </tr>
+        <tr>
+          <td><b>Potencia de diseño térmico (TDP)</b></td>
+          <td>28.9 W</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+
+
+</body>
+
+</html>

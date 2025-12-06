@@ -1,0 +1,2324 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practica Procesadores</title>
+
+  <style>
+    /* ------------------ FONDO GENERAL ------------------ */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(39, 24, 126, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(174, 184, 254, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(241, 242, 246, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      background-attachment: fixed;
+    }
+
+    /* ------------------ PANEL LATERAL ------------------ */
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 10px);
+      ;
+      overflow-y: auto;
+      padding: 15px;
+      padding-bottom: 40px;
+      box-shadow: 2px 0 14px rgba(0, 0, 0, 0.25);
+      scrollbar-color: #758Bfd #f1f2f6;
+
+      /* MISMO ESTILO RADIAL DEL ORIGINAL */
+      background:
+        linear-gradient(135deg, #f1f2f6 0%, #aeb8fe 100%),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.15), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.15), transparent 60%);
+    }
+
+    .controls h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #27187e;
+    }
+
+
+    /* ------------------ BOTONES DEL ÍNDICE ------------------ */
+
+    .menu-btn {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9em;
+      color: white;
+    }
+
+    /* Color NARANJA (active original) */
+    .menu-main {
+      background: linear-gradient(135deg, #ff8600 0%, #ee5a52 100%);
+    }
+
+    .menu-p {
+      background: #ee5a52;
+    }
+
+    .menu-pdeep {
+      background: #ff8600;
+      color: #000;
+      width: 85%
+    }
+
+    /* Botones de UNIDAD – AZUL OSCURO (como botones originales) */
+    .menu-unit {
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+    }
+
+    /* SUBTEMAS – color más claro */
+    .menu-sub {
+      background: #758bfd;
+      color: #000;
+    }
+
+    /* SUB-SUB TEMAS (1.2.1, 3.1.1, etc.) */
+    .menu-subdeep {
+      background: #aeb8fe;
+      color: #000;
+      width: 85%;
+    }
+
+
+    /* ------------------ CONTENIDO ------------------ */
+
+    .container {
+      margin-left: 240px;
+      padding: 20px;
+      color: #444
+    }
+
+    /* ENCABEZADO estilo “cristal”, similar al original */
+    header {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95)),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.1), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.1), transparent 60%);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.3em;
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: #444;
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    #content-area {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      min-height: 500px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Estilos para procesadores NO seleccionados */
+    .processor-section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: auto;
+    }
+
+    .processor-section table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .processor-section table,
+    .processor-section th,
+    .processor-section td {
+      border: 1px solid #ddd;
+    }
+
+    .processor-section th,
+    .processor-section td {
+      padding: 10px;
+      text-align: left;
+      background-color: #f9f6f6;
+    }
+
+    .processor-section th {
+      background-color: #e2e2ff;
+    }
+
+    /* Estilos para procesadores SELECCIONADOS */
+    .processor-selected {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 2px solid #4A6FFF;
+      border-radius: 8px;
+      overflow: auto;
+      background: linear-gradient(135deg, #758BFD 0%, #27187E 100%);
+      color: white;
+    }
+
+    .processor-selected h4 {
+      color: #FFFFFF !important;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .processor-selected table.selected-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      color: white;
+    }
+
+    .processor-selected table.selected-table,
+    .processor-selected table.selected-table th,
+    .processor-selected table.selected-table td {
+      border: 1px solid #4A6FFF;
+    }
+
+    .processor-selected table.selected-table th,
+    .processor-selected table.selected-table td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .processor-selected table.selected-table th {
+      background-color: rgba(74, 111, 255, 0.8);
+      color: white;
+    }
+
+    .processor-selected table.selected-table td {
+      background-color: rgba(39, 24, 126, 0.7);
+    }
+
+    .processor-selected table.selected-table td b {
+      color: #FFD700;
+    }
+
+    /* IMAGENES */
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    /* Centrada */
+    .img-center {
+      display: block;
+      margin: 20px auto;
+      max-width: 90%;
+    }
+
+    /* Izquierda */
+    .img-left {
+      float: left;
+      margin: 10px 20px 10px 0;
+      max-width: 45%;
+    }
+
+    /* Derecha */
+    .img-right {
+      float: right;
+      margin: 10px 0 10px 20px;
+      max-width: 45%;
+    }
+
+    /* Banner */
+    .img-full {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    /* Fix floats */
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- PANEL LATERAL: ÍNDICE -->
+  <div class="controls">
+
+    <!-- MENU PRINCIPAL -->
+    <a href="../index.html">
+      <button class="menu-btn menu-main">Menú Principal</button>
+    </a>
+
+    <!-- UNIDAD 1 -->
+    <a href="../u1/u1_index.html">
+      <button class="menu-btn menu-unit">Unidad 1: Arquitectura de Cómputo</button>
+    </a>
+
+    <a href="../u1/u1_1.html">
+      <button class="menu-btn menu-sub">1.1 Modelo de arquitecturas</button>
+    </a>
+
+    <a href="../u1/u1_2.html">
+      <button class="menu-btn menu-sub">1.2 Análisis de componentes</button>
+    </a>
+
+    <a href="../u1/u1_2_1.html">
+      <button class="menu-btn menu-subdeep">1.2.1 CPU</button>
+    </a>
+    <a href="../u1/u1_2_2.html">
+      <button class="menu-btn menu-subdeep">1.2.2 Memoria</button>
+    </a>
+    <a href="../u1/u1_2_3.html">
+      <button class="menu-btn menu-subdeep">1.2.3 Sistemas E/S</button>
+    </a>
+    <a href="../u1/u1_2_4.html">
+      <button class="menu-btn menu-subdeep">1.2.4 Buses</button>
+    </a>
+
+
+    <!-- UNIDAD 2 -->
+    <a href="../u2/u2_index.html">
+      <button class="menu-btn menu-unit">Unidad 2: CPU</button>
+    </a>
+
+    <a href="../u2/u2_1.html">
+      <button class="menu-btn menu-sub">2.1 Organización del procesador</button>
+    </a>
+
+    <a href="../u2/u2_2.html">
+      <button class="menu-btn menu-sub">2.2 Estructura de Registros</button>
+    </a>
+
+    <a href="../u2/u2_3.html">
+      <button class="menu-btn menu-sub">2.3 Ciclo de Instrucción</button>
+    </a>
+
+    <a href="../u2/u2_4.html">
+      <button class="menu-btn menu-sub">2.4 Modos de direccionamiento</button>
+    </a>
+
+
+    <!-- UNIDAD 3 -->
+    <a href="../u3/u3_index.html">
+      <button class="menu-btn menu-unit">Unidad 3: Selección de Componentes</button>
+    </a>
+
+    <a href="../u3/u3_1.html">
+      <button class="menu-btn menu-sub">3.1 Chipset</button>
+    </a>
+
+    <a href="../u3/u3_1_1.html">
+      <button class="menu-btn menu-subdeep">3.1.1 CPU</button>
+    </a>
+    <a href="../u3/u3_1_2.html">
+      <button class="menu-btn menu-subdeep">3.1.2 Controlador de Bus</button>
+    </a>
+    <a href="../u3/u3_1_3.html">
+      <button class="menu-btn menu-subdeep">3.1.3 E/S</button>
+    </a>
+    <a href="../u3/u3_1_4.html">
+      <button class="menu-btn menu-subdeep">3.1.4 Interrupciones</button>
+    </a>
+    <a href="../u3/u3_1_5.html">
+      <button class="menu-btn menu-subdeep">3.1.5 Controlador DMA</button>
+    </a>
+    <a href="../u3/u3_1_6.html">
+      <button class="menu-btn menu-subdeep">3.1.6 Circuitos de temporización</button>
+    </a>
+    <a href="../u3/u3_1_7.html">
+      <button class="menu-btn menu-subdeep">3.1.7 Controladores de video</button>
+    </a>
+
+    <a href="../u3/u3_2.html">
+      <button class="menu-btn menu-sub">3.2 Almacenamiento</button>
+    </a>
+
+    <a href="../u3/u3_3.html">
+      <button class="menu-btn menu-sub">3.3 Fuentes de Alimentación</button>
+    </a>
+
+    <a href="../u3/u3_4.html">
+      <button class="menu-btn menu-sub">3.4 Ambientes de servicio</button>
+    </a>
+
+    <!-- UNIDAD 4 -->
+    <a href="../u4/u4_index.html">
+      <button class="menu-btn menu-unit">Unidad 4: Computación Paralela</button>
+    </a>
+
+    <a href="../u4/u4_1.html">
+      <button class="menu-btn menu-sub">4.1 Aspectos básicos</button>
+    </a>
+
+    <a href="../u4/u4_2.html">
+      <button class="menu-btn menu-sub">4.2 Tipos de computación paralela</button>
+    </a>
+    <a href="../u4/u4_3.html">
+      <button class="menu-btn menu-sub">4.3 Sistemas de memoria compartida</button>
+    </a>
+    <a href="../u4/u4_4.html">
+      <button class="menu-btn menu-sub">4.4 Sistemas de memoria distribuida</button>
+    </a>
+
+
+    <!-- REPORTES/PRACTICAS -->
+    <a href="p_index.html">
+      <button class="menu-btn menu-p">Reportes/Prácticas</button>
+    </a>
+
+    <a href="p1.html">
+      <button class="menu-btn menu-pdeep">Práctica 1</button>
+    </a>
+
+    <a href="p2.html">
+      <button class="menu-btn menu-pdeep">Práctica 2</button>
+    </a>
+    <a href="p_cpu.html">
+      <button class="menu-btn menu-pdeep">Procesadores</button>
+    </a>
+    <a href="p_mb.html">
+      <button class="menu-btn menu-pdeep">Tarjeta Madre</button>
+    </a>
+    <a href="p_3.html">
+      <button class="menu-btn menu-pdeep">Práctica 3</button>
+    </a>
+    <a href="p_4.html">
+      <button class="menu-btn menu-pdeep">Práctica 4</button>
+    </a>
+
+
+    <!-- COTIZACION -->
+    <a href="../cot/cotiz.html">
+      <button class="menu-btn menu-unit">Cotización</button>
+    </a>
+
+  </div>
+
+
+
+  <!-- CONTENIDO CENTRAL -->
+ <div class="container">
+  <header>
+    <h1>Práctica – Investigación de Procesadores</h1>
+  </header>
+
+  <div id="content-area">
+
+    <img class="img-right" src="../img/practicas/p_cpu_portada.png" alt="Procesadores Intel Core Ultra" style="width:30%;">
+
+    <h2>Reporte de práctica - Procesadores</h2>
+
+    <p><b>Alumno:</b> Reynaldo Enríquez Zamorano<br>
+      <b>Materia:</b> Arquitectura de Computadoras<br>
+      <b>Fecha:</b> 17/10/2025<br><br>
+      <b><i>1.&emsp;Investigar y seleccionar 10 procesadores de Intel y 10 de AMD. Toma fotos y explica las características de cada uno<br>
+          2.&emsp;Para que sea la base de los 6 equipos a diseñar (de las 3 gamas).</i></b>
+    </p>
+
+    <h2>Procesadores</h2>
+    <p>Procesadores seleccionados para los 6 están marcados con <span style="color: blue; font-weight: bold;">AZUL. <a href="#procesadores-seleccionados">Clic Aquí para verlos.</a></span></p>
+
+    <p>Dentro de las características de los siguientes procesadores, se incluye:</p>
+    <ul>
+      <li><b>Multiplicador de CPU:</b> Mide la relación entre el reloj de la CPU y el reloj externo.</li>
+      <li><b>Conjunto de instrucciones:</b> Grupos de comandos que indican que tareas puede realizar el procesador. El conjunto x86 se utiliza por Intel y AMD.</li>
+      <li><b>Microarquitectura:</b> Estructura y el diseño de la unidad central de procesamiento.</li>
+    </ul>
+
+    <h2>Gama Baja</h2>
+
+    <div class="processor-selected">
+      <h3>Intel Pentium Gold G5420</h3>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Pentium Dual-Core</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4.1GHz/4100MHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de CPU</b></td>
+          <td>41</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1200</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>3.75cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>16 de Marzo, 2021</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Comet Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>2, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>2x32KB de instrucciones<br>2x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>2 de 256 KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>4MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>Intel i3-12100</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i3</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.3GHz a 4.3GHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de CPU</b></td>
+          <td>33</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>4 de Enero, 2022</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Alder Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 8 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x32KB de instrucciones<br>4x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>4 de 1.25MB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>12MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>Intel i3-10100</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i3</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.6GHz a 4.3GHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de CPU</b></td>
+          <td>36</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1200</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>3.75cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>30 de Abril, 2020</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Comet Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 8 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x32KB de instrucciones<br>4x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>4 de 256 KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>6MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>AMD Ryzen 3 5300G</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 3</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4GHz -- 4.2GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Micro-Pin Grid Array (PGA) de 1331 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM4</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>4 de Enero, 2022</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 3</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 8 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x32KB de instrucciones<br>4x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>4 de 512KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>8MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>AMD Ryzen 3 3200G</h3>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 3</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.6GHz -- 4GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Micro-Pin Grid Array (PGA) de 1331 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM4</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>7 de Julio, 2019</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen+</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x64KB de instrucciones<br>4x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>4 de 512KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>4MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>AMD Ryzen 3 4300G</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 3</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.8GHz -- 4GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Micro-Pin Grid Array (PGA) de 1331 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM4</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>21 de Septiembre, 2020</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 2</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 8 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x32KB de instrucciones<br>4x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>4 de 512KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>4MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Gama Media</h2>
+
+    <div class="processor-selected">
+      <h3>Intel i5-14400</h3>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i5</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>2.5GHz a 4.7GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>16 de Marzo, 2024</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Comet Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>10, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>4MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Performance Cores (P-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>6, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>6x32KB de instrucciones<br>6x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>6 de 1.25MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Efficient Cores (E-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x32KB de instrucciones<br>4x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>2MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>Intel i5-10600K</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i5</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4.1GHz a 4.8GHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de CPU</b></td>
+          <td>41</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1200</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>3.75cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>30 de Abril, 2020</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Comet Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 8 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>6x32KB de instrucciones<br>6x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>6 de 256 KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>12MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>Intel i5-13400</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i5</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>2.5GHz a 4.6GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>3 de Enero, 2023</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Raptor Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>10, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>20MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Performance Cores (P-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>6, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>6x32KB de instrucciones<br>6x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>6 de 1.25MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Efficient Cores (E-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x64KB de instrucciones<br>4x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>2MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>AMD Ryzen 5 5500</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 5</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.6GHz -- 4.2GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Micro-Pin Grid Array (PGA) de 1331 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM4</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>4 de Abril, 2022</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 3</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>6, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>6x32KB de instrucciones<br>6x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>6 de 512KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>16MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-selected">
+      <h3>AMD Ryzen 5 8600G</h3>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 5</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4.3GHz a 5GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Micro-Pin Grid Array (PGA) de 1718 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM5</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>16 de Abril, 2022</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 4</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>6, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>6x32KB de instrucciones<br>6x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>6 de 1MB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>16MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>256GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>AMD Ryzen 5 5600X</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 5</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.7GHz -- 4.6GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Micro-Pin Grid Array (PGA) de 1331 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM4</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>5 de Noviembre, 2020</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 3</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>6, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>6x32KB de instrucciones<br>6x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>6 de 512KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>32MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>Gama Alta</h2>
+
+    <div class="processor-selected">
+      <h3>Intel i7-14700</h3>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i7</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>2.1GHz a 5.4GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>8 de Enero, 2024</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Raptor Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>20, con 28 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>192GB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>33MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Performance Cores (P-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>8, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>8x32KB de instrucciones<br>8x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>8 de 2MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Efficient Cores (E-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>12, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>12x64KB de instrucciones<br>12x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>3 de 4MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>Intel i7-12700</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i7</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>2.1GHz a 4.9GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>4 de Enero, 2022</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Alder Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>12, con 20 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>25MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Performance Cores (P-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>8, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>8x32KB de instrucciones, 8x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>8 de 1.25MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Efficient Cores (E-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x64KB de instrucciones, 4x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>2MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>Intel i9-14900K</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i9</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.2GHz a 6GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>17 de Octubre, 2023</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Raptor Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>24, con 32 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>192GB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>36MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Performance Cores (P-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>8, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>8x32KB de instrucciones, 8x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>8 de 2MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Efficient Cores (E-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>16, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>16x64KB de instrucciones, 16x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>4 de 4MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>Intel i7-12700K</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i7</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.6GHz a 5GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>4 de Noviembre, 2021</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Raptor Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>12, con 20 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>25MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Performance Cores (P-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>8, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>8x32KB de instrucciones<br>8x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>8 de 1.25MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Efficient Cores (E-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x64KB de instrucciones<br>4x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>2MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>AMD Ryzen 9 9900X</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 9</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4.4GHz a 5.6GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Land Grid Array (LGA) de 1718 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM5</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>15 de Agosto, 2024</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 5</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>12, con 24 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>12x32KB de instrucciones<br>12x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>12 de 1MB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>2 de 32MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>192GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-selected">
+      <h3>AMD Ryzen 9 5900XT</h3>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 9</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.3GHz a 4.8GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Land Grid Array (LGA) de 1331 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM4</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>31 de Junio, 2024</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 3</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>16, con 32 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>16x32KB de instrucciones<br>16x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>16 de 512MB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>2 de 32MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>AMD Ryzen 7 7800X3D</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 9</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4.2GHz a 5GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Land Grid Array (LGA) de 1718 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM5</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>6 de Abril, 2023</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 4</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>8, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>8x32KB de instrucciones<br>8x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>8 de 1MB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>96MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>192GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-section">
+      <h3>AMD Ryzen 7 9800X3D</h3>
+      <table>
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 9</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4.7GHz a 5.2GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Land Grid Array (LGA) de 1718 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM5</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>31 de Octubre, 2024</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 5</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>8, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>8x32KB de instrucciones<br>8x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>8 de 1MB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>96MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>192GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2 id="procesadores-seleccionados" style="border-bottom: 3px solid #4A6FFF; padding-bottom: 10px;">Procesadores Seleccionados</h2>
+
+    <h3>Gama Baja</h3>
+
+    <div class="processor-selected">
+      <h4 style="color: #2D4FCC;">Intel Pentium Gold G5420</h4>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Pentium Dual-Core</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4.1GHz/4100MHz</td>
+        </tr>
+        <tr>
+          <td><b>Multiplicador de CPU</b></td>
+          <td>41</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1200</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>3.75cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>16 de Marzo, 2021</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Comet Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>2, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>2x32KB de instrucciones<br>2x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>2 de 256 KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>4MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-selected">
+      <h4 style="color: #2D4FCC;">AMD Ryzen 3 3200G</h4>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 3</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.6GHz -- 4GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Micro-Pin Grid Array (PGA) de 1331 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM4</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>7 de Julio, 2019</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen+</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x64KB de instrucciones<br>4x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>4 de 512KB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>4MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>Gama Media</h3>
+
+    <div class="processor-selected">
+      <h4 style="color: #2D4FCC;">Intel i5-14400</h4>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i5</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>2.5GHz a 4.7GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>16 de Marzo, 2024</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Comet Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>10, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>4MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Performance Cores (P-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>6, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>6x32KB de instrucciones<br>6x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>6 de 1.25MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Efficient Cores (E-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>4, con 4 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>4x32KB de instrucciones<br>4x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>2MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-selected">
+      <h4 style="color: #2D4FCC;">AMD Ryzen 5 8600G</h4>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 5</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>4.3GHz a 5GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Micro-Pin Grid Array (PGA) de 1718 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM5</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>16 de Abril, 2022</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 4</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>6, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>6x32KB de instrucciones<br>6x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>6 de 1MB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>16MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>256GB</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>Gama Alta</h3>
+
+    <div class="processor-selected">
+      <h4 style="color: #2D4FCC;">Intel i7-14700</h4>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>Intel Core i7</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>2.1GHz a 5.4GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Flip-Chip Land Grid Array (LGA)</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket 1700</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4.5cm x 3.75cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>8 de Enero, 2024</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Raptor Lake</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>20, con 28 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>192GB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>33MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Performance Cores (P-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>8, con 16 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>8x32KB de instrucciones<br>8x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>8 de 2MB</td>
+        </tr>
+        <tr>
+          <th colspan="2">Efficient Cores (E-cores)</th>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>12, con 12 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>12x64KB de instrucciones<br>12x32KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>3 de 4MB</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="processor-selected">
+      <h4 style="color: #2D4FCC;">AMD Ryzen 9 5900XT</h4>
+      <table class="selected-table">
+        <tr>
+          <th colspan="2">Especificaciones</th>
+        </tr>
+        <tr>
+          <td><b>Familia</b></td>
+          <td>AMD Ryzen 9</td>
+        </tr>
+        <tr>
+          <td><b>Velocidad</b></td>
+          <td>3.3GHz a 4.8GHz</td>
+        </tr>
+        <tr>
+          <td><b>Encapsulado</b></td>
+          <td>Land Grid Array (LGA) de 1331 pins</td>
+        </tr>
+        <tr>
+          <td><b>Zócalo</b></td>
+          <td>Socket AM4</td>
+        </tr>
+        <tr>
+          <td><b>Dimensiones</b></td>
+          <td>4cm x 4cm</td>
+        </tr>
+        <tr>
+          <td><b>Fecha de lanzamiento</b></td>
+          <td>31 de Junio, 2024</td>
+        </tr>
+        <tr>
+          <th colspan="2">Arquitectura</th>
+        </tr>
+        <tr>
+          <td><b>Conjunto de instrucciones</b></td>
+          <td>x86</td>
+        </tr>
+        <tr>
+          <td><b>Microarquitectura</b></td>
+          <td>Zen 3</td>
+        </tr>
+        <tr>
+          <td><b>Numero de núcleos</b></td>
+          <td>16, con 32 hilos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L1</b></td>
+          <td>16x32KB de instrucciones<br>16x48KB de datos</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L2</b></td>
+          <td>16 de 512MB</td>
+        </tr>
+        <tr>
+          <td><b>Tamaño cache L3</b></td>
+          <td>2 de 32MB</td>
+        </tr>
+        <tr>
+          <td><b>Memoria física</b></td>
+          <td>128GB</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+
+</body>
+
+</html>

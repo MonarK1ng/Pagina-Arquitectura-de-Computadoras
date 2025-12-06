@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotización Equipos</title>
+
+  <style>
+    /* ------------------ FONDO GENERAL ------------------ */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(39, 24, 126, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(174, 184, 254, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(241, 242, 246, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      background-attachment: fixed;
+    }
+
+    /* ------------------ PANEL LATERAL ------------------ */
+    .controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 220px;
+      height: calc(100vh - 10px);
+      ;
+      overflow-y: auto;
+      padding: 15px;
+      padding-bottom: 40px;
+      box-shadow: 2px 0 14px rgba(0, 0, 0, 0.25);
+      scrollbar-color: #758Bfd #f1f2f6;
+
+      /* MISMO ESTILO RADIAL DEL ORIGINAL */
+      background:
+        linear-gradient(135deg, #f1f2f6 0%, #aeb8fe 100%),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.15), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.15), transparent 60%);
+    }
+
+    .controls h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #27187e;
+    }
+
+
+    /* ------------------ BOTONES DEL ÍNDICE ------------------ */
+
+    .menu-btn {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9em;
+      color: white;
+    }
+
+    /* Color NARANJA (active original) */
+    .menu-main {
+      background: linear-gradient(135deg, #ff8600 0%, #ee5a52 100%);
+    }
+
+    .menu-p {
+      background: #ee5a52;
+    }
+
+    .menu-pdeep {
+      background: #ff8600;
+      color: #000;
+      width: 85%
+    }
+
+    /* Botones de UNIDAD – AZUL OSCURO (como botones originales) */
+    .menu-unit {
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+    }
+
+    /* SUBTEMAS – color más claro */
+    .menu-sub {
+      background: #758bfd;
+      color: #000;
+    }
+
+    /* SUB-SUB TEMAS (1.2.1, 3.1.1, etc.) */
+    .menu-subdeep {
+      background: #aeb8fe;
+      color: #000;
+      width: 85%;
+    }
+
+
+    /* ------------------ CONTENIDO ------------------ */
+
+    .container {
+      margin-left: 240px;
+      padding: 20px;
+      color: #444
+    }
+
+    /* ENCABEZADO estilo “cristal”, similar al original */
+    header {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95)),
+        radial-gradient(circle at 30% 20%, rgba(103, 126, 234, 0.1), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(39, 24, 126, 0.1), transparent 60%);
+      padding: 25px;
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      text-align: center;
+
+
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.3em;
+      background: linear-gradient(135deg, #758Bfd 0%, #27187e 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .subtitle {
+      color: #444;
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+
+    #content-area {
+      margin-top: 20px;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      min-height: 500px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    a:link {
+      color: #FFD700;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+
+    a:visited {
+      color: #aeb8fe;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #ee5a52;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+
+    a:active {
+      color: #ff8600;
+      background-color: transparent;
+      text-decoration: underline;
+    }
+
+    /* IMAGENES */
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    /* Centrada */
+    .img-center {
+      display: block;
+      margin: 20px auto;
+      max-width: 90%;
+    }
+
+    /* Izquierda */
+    .img-left {
+      float: left;
+      margin: 10px 20px 10px 0;
+      max-width: 45%;
+    }
+
+    /* Derecha */
+    .img-right {
+      float: right;
+      margin: 10px 0 10px 20px;
+      max-width: 45%;
+    }
+
+    /* Banner */
+    .img-full {
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    /* Fix floats */
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    .processor-selected {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 2px solid #4A6FFF;
+      border-radius: 8px;
+      overflow: auto;
+      background: linear-gradient(135deg, #758BFD 0%, #27187E 100%);
+      color: white;
+    }
+
+    .processor-selected h4 {
+      color: #FFFFFF !important;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .processor-selected table.selected-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      color: white;
+    }
+
+    .processor-selected table.selected-table,
+    .processor-selected table.selected-table th,
+    .processor-selected table.selected-table td {
+      border: 1px solid #4A6FFF;
+    }
+
+    .processor-selected table.selected-table th,
+    .processor-selected table.selected-table td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .processor-selected table.selected-table th {
+      background-color: rgba(74, 111, 255, 0.8);
+      color: white;
+    }
+
+    .processor-selected table.selected-table td {
+      background-color: rgba(39, 24, 126, 0.7);
+    }
+
+    .processor-selected table.selected-table td b {
+      color: #FFD700;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <!-- PANEL LATERAL: ÍNDICE -->
+  <div class="controls">
+
+    <!-- MENU PRINCIPAL -->
+    <a href="../index.html">
+      <button class="menu-btn menu-main">Menú Principal</button>
+    </a>
+
+    <!-- UNIDAD 1 -->
+    <a href="../u1_index.html">
+      <button class="menu-btn menu-unit">Unidad 1: Arquitectura de Cómputo</button>
+    </a>
+
+    <a href="../u1_1.html">
+      <button class="menu-btn menu-sub">1.1 Modelo de arquitecturas</button>
+    </a>
+
+    <a href="../u1/u1_2.html">
+      <button class="menu-btn menu-sub">1.2 Análisis de componentes</button>
+    </a>
+
+    <a href="../u1/u1_2_1.html">
+      <button class="menu-btn menu-subdeep">1.2.1 CPU</button>
+    </a>
+    <a href="../u1/u1_2_2.html">
+      <button class="menu-btn menu-subdeep">1.2.2 Memoria</button>
+    </a>
+    <a href="../u1/u1_2_3.html">
+      <button class="menu-btn menu-subdeep">1.2.3 Sistemas E/S</button>
+    </a>
+    <a href="../u1/u1_2_4.html">
+      <button class="menu-btn menu-subdeep">1.2.4 Buses</button>
+    </a>
+
+
+    <!-- UNIDAD 2 -->
+    <a href="../u2/u2_index.html">
+      <button class="menu-btn menu-unit">Unidad 2: CPU</button>
+    </a>
+
+    <a href="../u2/u2_1.html">
+      <button class="menu-btn menu-sub">2.1 Organización del procesador</button>
+    </a>
+
+    <a href="../u2/u2_2.html">
+      <button class="menu-btn menu-sub">2.2 Estructura de Registros</button>
+    </a>
+
+    <a href="../u2/u2_3.html">
+      <button class="menu-btn menu-sub">2.3 Ciclo de Instrucción</button>
+    </a>
+
+    <a href="../u2/u2_4.html">
+      <button class="menu-btn menu-sub">2.4 Modos de direccionamiento</button>
+    </a>
+
+
+    <!-- UNIDAD 3 -->
+    <a href="../u3/u3_index.html">
+      <button class="menu-btn menu-unit">Unidad 3: Selección de Componentes</button>
+    </a>
+
+    <a href="../u3/u3_1.html">
+      <button class="menu-btn menu-sub">3.1 Chipset</button>
+    </a>
+
+    <a href="../u3/u3_1_1.html">
+      <button class="menu-btn menu-subdeep">3.1.1 CPU</button>
+    </a>
+    <a href="../u3/u3_1_2.html">
+      <button class="menu-btn menu-subdeep">3.1.2 Controlador de Bus</button>
+    </a>
+    <a href="../u3/u3_1_3.html">
+      <button class="menu-btn menu-subdeep">3.1.3 E/S</button>
+    </a>
+    <a href="../u3/u3_1_4.html">
+      <button class="menu-btn menu-subdeep">3.1.4 Interrupciones</button>
+    </a>
+    <a href="../u3/u3_1_5.html">
+      <button class="menu-btn menu-subdeep">3.1.5 Controlador DMA</button>
+    </a>
+    <a href="../u3/u3_1_6.html">
+      <button class="menu-btn menu-subdeep">3.1.6 Circuitos de temporización</button>
+    </a>
+    <a href="../u3/u3_1_7.html">
+      <button class="menu-btn menu-subdeep">3.1.7 Controladores de video</button>
+    </a>
+
+    <a href="../u3/u3_2.html">
+      <button class="menu-btn menu-sub">3.2 Almacenamiento</button>
+    </a>
+
+    <a href="../u3/u3_3.html">
+      <button class="menu-btn menu-sub">3.3 Fuentes de Alimentación</button>
+    </a>
+
+    <a href="../u3/u3_4.html">
+      <button class="menu-btn menu-sub">3.4 Ambientes de servicio</button>
+    </a>
+
+    <!-- UNIDAD 4 -->
+    <a href="../u4/u4_index.html">
+      <button class="menu-btn menu-unit">Unidad 4: Computación Paralela</button>
+    </a>
+
+    <a href="../u4/u4_1.html">
+      <button class="menu-btn menu-sub">4.1 Aspectos básicos</button>
+    </a>
+
+    <a href="../u4/u4_2.html">
+      <button class="menu-btn menu-sub">4.2 Tipos de computación paralela</button>
+    </a>
+    <a href="../u4/u4_3.html">
+      <button class="menu-btn menu-sub">4.3 Sistemas de memoria compartida</button>
+    </a>
+    <a href="../u4/u4_4.html">
+      <button class="menu-btn menu-sub">4.4 Sistemas de memoria distribuida</button>
+    </a>
+
+
+    <!-- REPORTES/PRACTICAS -->
+    <a href="../pract/p_index.html">
+      <button class="menu-btn menu-p">Reportes/Prácticas</button>
+    </a>
+
+    <a href="../pract/p1.html">
+      <button class="menu-btn menu-pdeep">Práctica 1</button>
+    </a>
+
+    <a href="../pract/p2.html">
+      <button class="menu-btn menu-pdeep">Práctica 2</button>
+    </a>
+    <a href="../pract/p_cpu.html">
+      <button class="menu-btn menu-pdeep">Procesadores</button>
+    </a>
+    <a href="../pract/p_mb.html">
+      <button class="menu-btn menu-pdeep">Tarjeta Madre</button>
+    </a>
+    <a href="../pract/p_3.html">
+      <button class="menu-btn menu-pdeep">Práctica 3</button>
+    </a>
+    <a href="../pract/p_4.html">
+      <button class="menu-btn menu-pdeep">Práctica 4</button>
+    </a>
+
+
+    <!-- COTIZACION -->
+    <a href="cotiz.html">
+      <button class="menu-btn menu-unit">Cotización</button>
+    </a>
+
+  </div>
+
+
+
+  <!-- CONTENIDO CENTRAL -->
+  <div class="container">
+
+    <header>
+      <h1>Cotización de Equipos – Componentes y Precios</h1>
+    </header>
+
+    <div id="content-area">
+
+      <img class="img-right" src="../img/practicas/cot_portada.png" alt="Cotización de equipos" style="width:25%;">
+
+      <h2>Cotización de Equipos</h2>
+
+      <p><b>Alumno:</b> Reynaldo Enríquez Zamorano<br>
+        <b>Materia:</b> Arquitectura de Computadoras<br>
+        <b>Fecha:</b> 3/11/2025<br><br>
+        <b><i>Debido a la ambigüedad de las tareas de Diseño de equipos y Cotización de equipos, este documento contiene
+            la cotización y precios de todos los componentes. Para solo ver los 5 componentes principales y por qué se
+            seleccionaron, vea el documento de Diseño de equipos.</i></b>
+      </p>
+
+      <div class="processor-selected">
+        <h2>Gama Baja</h2>
+
+        <h3>Configuración 1: Intel Pentium Gold G5420</h3>
+        <table class="selected-table">
+          <tr>
+            <th colspan="2">Componentes Principales</th>
+          </tr>
+          <tr>
+            <td><b>CPU</b></td>
+            <td>Intel Pentium Gold G5420 – $1,390.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/procesador-intel-pentium-gold-g5420-bx80684g5420-de-2-nucleos-y-38ghz-de-frecuencia-con-grafica-integrada/p/MLM15915917"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Tarjeta Madre</b></td>
+            <td>Asus Prime B365m-k – $1,423.10&emsp;<a
+                href="https://www.mercadolibre.com.mx/-ysh-mother-asus-prime-b365m-k-lga-1151-ddr4-/p/MLM2037859531"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Memoria RAM</b></td>
+            <td>2x Rasalas 8GB DDR4 – $1,140.68&emsp;<a
+                href="https://www.mercadolibre.com.mx/memoria-ram-rasalas-8gb-ddr4-3200mhz-udimm-verde-para-pc-de-escritorio/p/MLM52840232"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Fuente de Poder</b></td>
+            <td>Balam Rush BR-937719 650W – $770.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/fuente-de-poder-para-pc-balam-rush-br-937719-650w-negra/p/MLM43927307"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Almacenamiento</b></td>
+            <td>M.2 SSD 250 GB Western Digital – $820.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/ssd-m2-250gb-western-digital-nvme-2280-pcie-gen3-2400mbs-color-verde/p/MLM26032006"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <th colspan="2">Otros Componentes</th>
+          </tr>
+          <tr>
+            <td><b>Gabinete</b></td>
+            <td>Gabinete micro-ATX Yeyian – $903.08&emsp;<a
+                href="https://www.mercadolibre.com.mx/gabinete-yeyian-hussar-plus-con-ventana-midi-tower-atxmicro-atxmini-itx-usb-32-sin-fuente-1-ventilador-instalado-negro/p/MLM29170221"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <th colspan="2">Resumen de Costos</th>
+          </tr>
+          <tr>
+            <td><b>Costo de Componentes Principales</b></td>
+            <td><b style="color: #ff8600;">$5,543.78</b></td>
+          </tr>
+          <tr>
+            <td><b>Cotización Total (con envío)</b></td>
+            <td><b style="color: #ff8600;">$6,911.46</b></td>
+          </tr>
+        </table>
+
+        <h3>Configuración 2: AMD Ryzen 3 3200G</h3>
+        <table class="selected-table">
+          <tr>
+            <th colspan="2">Componentes Principales</th>
+          </tr>
+          <tr>
+            <td><b>CPU</b></td>
+            <td>AMD Ryzen 3 3200G – $1,305.03&emsp;<a
+                href="https://www.mercadolibre.com.mx/procesador-amd-ryzen-3-3200g-socket-am4-360ghz-4-cores-cache-4mb-graficos-vega-8/p/MLM15076943"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Tarjeta Madre</b></td>
+            <td>ASUS Prime B450M-A II – $1,650.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/tarjeta-madre-asus-prime-b450m-a-ii-am4-drr4-micro-atx-color-negro/p/MLM42896437"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Memoria RAM</b></td>
+            <td>2x Rasalas 8GB DDR4 – $1,140.68&emsp;<a
+                href="https://www.mercadolibre.com.mx/memoria-ram-rasalas-8gb-ddr4-3200mhz-udimm-verde-para-pc-de-escritorio/p/MLM52840232"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Fuente de Poder</b></td>
+            <td>Balam Rush BR-937719 650W – $770.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/fuente-de-poder-para-pc-balam-rush-br-937719-650w-negra/p/MLM43927307"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Almacenamiento</b></td>
+            <td>M.2 SSD 250 GB Western Digital – $820.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/ssd-m2-250gb-western-digital-nvme-2280-pcie-gen3-2400mbs-color-verde/p/MLM26032006"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <th colspan="2">Otros Componentes</th>
+          </tr>
+          <tr>
+            <td><b>Gabinete</b></td>
+            <td>Gabinete micro-ATX Yeyian – $903.08&emsp;<a
+                href="https://www.mercadolibre.com.mx/gabinete-yeyian-hussar-plus-con-ventana-midi-tower-atxmicro-atxmini-itx-usb-32-sin-fuente-1-ventilador-instalado-negro/p/MLM29170221"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <th colspan="2">Resumen de Costos</th>
+          </tr>
+          <tr>
+            <td><b>Costo de Componentes Principales</b></td>
+            <td><b style="color: #ff8600;">$5,685.71</b></td>
+          </tr>
+          <tr>
+            <td><b>Cotización Total (con envío)</b></td>
+            <td><b style="color: #ff8600;">$6,588.79</b></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="processor-selected">
+        <h2>Gama Media</h2>
+
+        <h3>Configuración 3: Intel i5-14400</h3>
+        <table class="selected-table">
+          <tr>
+            <th colspan="2">Componentes Principales</th>
+          </tr>
+          <tr>
+            <td><b>CPU</b></td>
+            <td>Intel i5-14400 – $3,699.00</td>
+          </tr>
+          <tr>
+            <td><b>Tarjeta Madre</b></td>
+            <td>ASUS Prime B760M-A – $1,599.00</td>
+          </tr>
+          <tr>
+            <td><b>Memoria RAM</b></td>
+            <td>2x Team Group Elite 8GB DDR4 – $1,098.00</td>
+          </tr>
+          <tr>
+            <td><b>Fuente de Poder</b></td>
+            <td>Fuente integrada en gabinete</td>
+          </tr>
+          <tr>
+            <td><b>Almacenamiento</b></td>
+            <td>Lenovo SATA SSD LS8 480 GB – $699.00</td>
+          </tr>
+          <tr>
+            <th colspan="2">Otros Componentes</th>
+          </tr>
+          <tr>
+            <td><b>Gabinete</b></td>
+            <td>Gabinete micro-ATX Evotec – $499.00</td>
+          </tr>
+          <tr>
+            <th colspan="2">Resumen de Costos</th>
+          </tr>
+          <tr>
+            <td><b>Costo de Componentes Principales</b></td>
+            <td><b style="color: #ff8600;">$7,594.00</b></td>
+          </tr>
+          <tr>
+            <td><b>Cotización Total (con envío y seguro)</b></td>
+            <td><b style="color: #ff8600;">$7,920.88</b>&emsp;<a href="https://ddtech.mx/importar/FAjEAHVgOlbDBfBT" target="_blank">Cotización por
+                DDTech</a></td>
+          </tr>
+        </table>
+
+        <h3>Configuración 4: AMD Ryzen 5 8600G</h3>
+        <table class="selected-table">
+          <tr>
+            <th colspan="2">Componentes Principales</th>
+          </tr>
+          <tr>
+            <td><b>CPU</b></td>
+            <td>AMD Ryzen 5 8600G – $3,499.00</td>
+          </tr>
+          <tr>
+            <td><b>Tarjeta Madre</b></td>
+            <td>ASUS PRIME B650M-K – $2,069.00</td>
+          </tr>
+          <tr>
+            <td><b>Memoria RAM</b></td>
+            <td>1x Adata AD5-S 16GB DDR5 – $1,499.00</td>
+          </tr>
+          <tr>
+            <td><b>Fuente de Poder</b></td>
+            <td>Fuente integrada en gabinete</td>
+          </tr>
+          <tr>
+            <td><b>Almacenamiento</b></td>
+            <td>Adata SATA SSD SU630 480 GB – $649.00</td>
+          </tr>
+          <tr>
+            <th colspan="2">Otros Componentes</th>
+          </tr>
+          <tr>
+            <td><b>Gabinete</b></td>
+            <td>Gabinete micro-ATX Evotec – $499.00</td>
+          </tr>
+          <tr>
+            <th colspan="2">Resumen de Costos</th>
+          </tr>
+          <tr>
+            <td><b>Costo de Componentes Principales</b></td>
+            <td><b style="color: #ff8600;">$8,215.00</b></td>
+          </tr>
+          <tr>
+            <td><b>Cotización Total (con envío y seguro)</b></td>
+            <td><b style="color: #ff8600;">$8,554.30</b>&emsp;<a href="https://ddtech.mx/importar/Rk0A4waFSqS1A8Qf" target="_blank">Cotización por
+                DDTech</a></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="processor-selected">
+        <h2>Gama Alta</h2>
+
+        <h3>Configuración 5: Intel i7-14700</h3>
+        <table class="selected-table">
+          <tr>
+            <th colspan="2">Componentes Principales</th>
+          </tr>
+          <tr>
+            <td><b>CPU</b></td>
+            <td>Intel i7-14700 – $6,599.00</td>
+          </tr>
+          <tr>
+            <td><b>Tarjeta Madre</b></td>
+            <td>Gigabyte B760 Aorus Elite AX – $2,169.00</td>
+          </tr>
+          <tr>
+            <td><b>Memoria RAM</b></td>
+            <td>2x Adata ADG-S 16GB DDR5 – $2,998.00</td>
+          </tr>
+          <tr>
+            <td><b>Fuente de Poder</b></td>
+            <td>Evotec EV-600 600W – $369.00</td>
+          </tr>
+          <tr>
+            <td><b>Almacenamiento</b></td>
+            <td>M.2 SSD WD Green NVMe 1TB – $1,199.00</td>
+          </tr>
+          <tr>
+            <th colspan="2">Otros Componentes</th>
+          </tr>
+          <tr>
+            <td><b>Disipador</b></td>
+            <td>NX60 – $549.00</td>
+          </tr>
+          <tr>
+            <td><b>Tarjeta Gráfica</b></td>
+            <td>NVIDIA GeForce RTX 3050 – $3,999.00</td>
+          </tr>
+          <tr>
+            <td><b>Gabinete</b></td>
+            <td>Munfrost – $729.00</td>
+          </tr>
+          <tr>
+            <th colspan="2">Resumen de Costos</th>
+          </tr>
+          <tr>
+            <td><b>Costo de Componentes Principales</b></td>
+            <td><b style="color: #ff8600;">$13,334.00</b></td>
+          </tr>
+          <tr>
+            <td><b>Cotización Total (con envío y seguro)</b></td>
+            <td><b style="color: #ff8600;">$19,191.22</b>&emsp;<a href="https://ddtech.mx/importar/1vpo0eidnIY0Xwwa" target="_blank">Cotización por
+                DDTech</a></td>
+          </tr>
+        </table>
+
+        <h3>Configuración 6: AMD Ryzen 9 5900XT</h3>
+        <table class="selected-table">
+          <tr>
+            <th colspan="2">Componentes Principales</th>
+          </tr>
+          <tr>
+            <td><b>CPU</b></td>
+            <td>AMD Ryzen 9 5900XT – $6,399.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/procesador-amd-ryzen-9-5900xt-48-ghz-am4-sin-gpu/p/MLM38775549"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Tarjeta Madre</b></td>
+            <td>Asus Rog Strix B550-f Gaming – $3,989.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/tarjeta-madre-asus-rog-strix-b550-f-gaming-wifi-am4-ddr4-atx-color-negro/p/MLM22805177"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Memoria RAM</b></td>
+            <td>2x ADATA XPG 16 GB DDR4 – $2,296.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/memoria-ddr4-xpg-adata-16gb-3200-mhz-d35-gamming-black-rgb/p/MLM27792737"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Fuente de Poder</b></td>
+            <td>Redragon RGPS 700W – $1,775.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/fuente-de-poder-redragon-rgps-700w-ps005-80bonze-modular-color-negro/p/MLM20763709"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Almacenamiento</b></td>
+            <td>M.2 SSD Kingston Nv3 1TB – $1,349.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/unidad-ssd-interno-kingston-nv3-1tb-m2-nvme-40-6000mbs/p/MLM39766120"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <th colspan="2">Otros Componentes</th>
+          </tr>
+          <tr>
+            <td><b>Disipador</b></td>
+            <td>DeepCool AK400 – $899.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/disipador-para-cpu-deepcool-ak400-blanco-120mm-led-sin-rgb/p/MLM32973000"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Tarjeta Gráfica</b></td>
+            <td>NVIDIA GeForce RTX 3060 – $6,599.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/tarjeta-de-video-nvidia-zotac-gaming-geforce-rtx-30-series-rtx-3060-black-edition-12gb/p/MLM17456216"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <td><b>Gabinete</b></td>
+            <td>Gabinete GM930 – $1,576.00&emsp;<a
+                href="https://www.mercadolibre.com.mx/gabinete-gamer-media-torre-tank-pro-gm930-negro/p/MLM26673181"
+                target="_blank">Mercado Libre</a></td>
+          </tr>
+          <tr>
+            <th colspan="2">Resumen de Costos</th>
+          </tr>
+          <tr>
+            <td><b>Costo de Componentes Principales</b></td>
+            <td><b style="color: #ff8600;">$15,808.00</b></td>
+          </tr>
+          <tr>
+            <td><b>Cotización Total (con envío)</b></td>
+            <td><b style="color: #ff8600;">$24,882.47</b></td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
